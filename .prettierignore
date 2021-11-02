@@ -2,5 +2,8 @@
 build/
 coverage
 
-# Ignore Markdown files
+# Ignore Markdown
 *.md
+
+# Ignore all HTML files:
+*.html 
