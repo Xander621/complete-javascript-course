@@ -11,21 +11,21 @@ let score = Number(document.querySelector('.score').textContent);
 
 // console.log(`${secretNumber}`);
 
+function setMessage(selector, message) {
+  document.querySelector(`${selector}`).textContent = `${message}`;
+}
+
 document.querySelector('.check').addEventListener('click', () => {
   const guess = Number(document.querySelector('.guess').value);
   console.log(`Guess is of type ${typeof guess} and the value is ${guess}`);
 
-  if (score > 1) {
+  if (score >= 1) {
     if (!guess) {
-      document.querySelector('.message').textContent = 'No Number!';
-    } else if (guess < secretNumber) {
+      setMessage('.message', 'No Number!');
+    } else if (guess !== secretNumber) {
       score--;
-      document.querySelector('.score').textContent = `${score}`;
-      document.querySelector('.message').textContent = 'To Low!';
-    } else if (guess > secretNumber) {
-      score--;
-      document.querySelector('.score').textContent = `${score}`;
-      document.querySelector('.message').textContent = 'To High!';
+      setMessage('.score', `${score}`);
+      setMessage('.message', guess > secretNumber ? 'To High!': 'To Low!');
     } else {
       // Change the background color using the DOM
       document.body.style.backgroundColor = '#60b347';
@@ -33,20 +33,18 @@ document.querySelector('.check').addEventListener('click', () => {
 
       // Change the width of the number field using the DOM
       document.querySelector('.number').style.width = '30rem';
-      document.querySelector('.number').textContent = `${guess}`;
 
-      document.querySelector('.message').textContent = `Correct Number!`;
-      document.querySelector('.score').textContent = `${score}`;
-      document.querySelector('.highscore').textContent = `${score}`;
-      //   console.log(`Score is ${score}`);
+      setMessage('.number', `${guess}`);
+      setMessage('.message', `Correct Number!`);
+      setMessage('.score', `${score}`);
       if (Number(highScore) == 0 || Number(highScore) < Number(score)) {
+        setMessage('.highscore', `${score}`);
         highScore = `${score}`;
       }
     }
   } else {
-    score--;
-    document.querySelector('.score').textContent = `${score}`;
-    document.querySelector('.message').textContent = `You lost this round!`;
+    setMessage('.score', `${score}`);
+    setMessage('.message', `You lost this round!`);
   }
 });
 
@@ -66,11 +64,11 @@ document.querySelector('.again').addEventListener('click', () => {
   // Reset initial game values
   document.body.style.backgroundColor = '#222';
   document.querySelector('.number').style.width = `${defaultNumberBoxWidth}`;
-  document.querySelector('.number').textContent = '?';
-  document.querySelector('.message').textContent = 'Start guessing...';
+  setMessage('.number', `?`);
+  setMessage('.message', `Start guessing...`);
+  setMessage('.score', `${defaultScore}`);
+  setMessage('.highscore', `${highScore}`);
   document.querySelector('.guess').value = '';
-  document.querySelector('.score').textContent = `${defaultScore}`;
-  document.querySelector('.highscore').textContent = `${highScore}`;
   // Treating score as an integer so we're setting it explictly
   score = Number(defaultScore);
 
