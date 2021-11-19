@@ -26,4 +26,111 @@ const restaurant = {
       close: 24,
     },
   },
+
+  order: function(starterIndex, mainIndex) {
+    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  },
+
+  orderDelivery: function({starterIndex = 1, mainIndex = 0, time = '20:00', address = ''}) {
+    console.log(`Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}.`);
+  },
+
+  orderPasta: function(ing1, ing2, ing3) {
+    console.log(`Here is your delicious pasta with ${ing1}, ${ing2} and ${ing3}!`);
+  },
 };
+
+restaurant.orderDelivery({
+  time: '22:30',
+  address: 'Via del Sole, 21',
+  mainIndex: 2,
+  starterIndex: 2,
+});
+
+restaurant.orderDelivery({
+  address: 'Via del Sole, 21',
+  starterIndex: 1,
+});
+
+/**
+ * destructuring objects
+ */
+// const {name, openingHours, categories} = restaurant;
+// console.log('name, openingHours, categories :>> ', name, openingHours, categories);
+
+// // rename object properties to local variables 
+// const {name: restaurantName, openingHours: hours, categories: tags} = restaurant;
+// console.log('restaurantName, hours, tags :>> ', restaurantName, hours, tags);
+
+// // destructure w/ default values
+// const { menu = [], starterMenu: starters = []} = restaurant;
+// console.log('menu, starters :>> ', menu, starters);
+
+// // Mutating variables
+// let a = 111;
+// let b = 999;
+// const obj = {a: 23, b: 7, c: 14};
+
+// ({a,b} = obj);
+// console.log('a, b :>> ', a, b);
+
+// // nested objects
+// const {
+//   fri: {open: o, close: c}
+// } = openingHours;
+// console.log('o, c :>> ', o, c);
+
+/**
+ * destructring arrays
+ */ 
+// console.log(restaurant.order(2, 0));
+// const [appetizer, mainCourse] = restaurant.order(2, 0);
+// console.log(appetizer, mainCourse);
+
+// // nested array
+// const nested = [2, 4, [5, 6]];
+// const [i, ,j] = nested;
+// console.log(i, j);
+
+// const [i, ,[j, k]] = nested;
+// console.log(i, j, k);
+
+/**
+ * Spread Operator
+ * Can only be used to build an array or to pass arguments (comma delimited values)
+ * to a function
+ */
+const arr = [7, 8, 9];
+const badNewArr = [1, 2, arr[0], arr[1], arr[2]];
+console.log('badNewArr :>> ', badNewArr);
+
+const newArr = [1,2, ...arr];
+console.log('newArr :>> ', newArr);
+
+const newMenu = [...restaurant.mainMenu, 'Gnocci'];
+console.log('newMenu :>> ', newMenu);
+
+// Copy array
+const mainMenuCopy = [...restaurant.mainMenu];
+
+// Join two arrays
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+console.log('menuJoin :>> ', menu);
+
+// Iterables: arrays, strings, maps, sets, Not objects
+const str = 'Alexander';
+const letters = [...str, ' ', 'L.'];
+console.log('letters :>> ', letters);
+console.log('...str :>> ', ...str);
+
+// const ingredients = [
+//   prompt('Let\'s make pasta! Ingredient 1?'),
+//   prompt('Ingredient 2?'),
+//   prompt('Ingredient 3?')
+// ];
+// console.log('ingredients :>> ', ingredients);
+// restaurant.orderPasta(...ingredients);
+
+// Objects
+const newRestaurant = {foundedIn: '1998', ...restaurant, founder: 'Guiseppe'};
+console.log('newRestaurant :>> ', newRestaurant);
