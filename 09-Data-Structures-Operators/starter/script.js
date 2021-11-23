@@ -38,6 +38,11 @@ const restaurant = {
   orderPasta: function(ing1, ing2, ing3) {
     console.log(`Here is your delicious pasta with ${ing1}, ${ing2} and ${ing3}!`);
   },
+
+  orderPizza: function(mainIngredient, ...otherIngredients) {
+    console.log('mainIngredient :>> ', mainIngredient);
+    console.log('otherIngredients :>> ', otherIngredients);
+  },
 };
 
 restaurant.orderDelivery({
@@ -100,28 +105,28 @@ restaurant.orderDelivery({
  * Can only be used to build an array or to pass arguments (comma delimited values)
  * to a function
  */
-const arr = [7, 8, 9];
-const badNewArr = [1, 2, arr[0], arr[1], arr[2]];
-console.log('badNewArr :>> ', badNewArr);
+// const arr = [7, 8, 9];
+// const badNewArr = [1, 2, arr[0], arr[1], arr[2]];
+// console.log('badNewArr :>> ', badNewArr);
 
-const newArr = [1,2, ...arr];
-console.log('newArr :>> ', newArr);
+// const newArr = [1,2, ...arr];
+// console.log('newArr :>> ', newArr);
 
-const newMenu = [...restaurant.mainMenu, 'Gnocci'];
-console.log('newMenu :>> ', newMenu);
+// const newMenu = [...restaurant.mainMenu, 'Gnocci'];
+// console.log('newMenu :>> ', newMenu);
 
-// Copy array
-const mainMenuCopy = [...restaurant.mainMenu];
+// // Copy array
+// const mainMenuCopy = [...restaurant.mainMenu];
 
-// Join two arrays
-const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
-console.log('menuJoin :>> ', menu);
+// // Join two arrays
+// const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+// console.log('menuJoin :>> ', menu);
 
-// Iterables: arrays, strings, maps, sets, Not objects
-const str = 'Alexander';
-const letters = [...str, ' ', 'L.'];
-console.log('letters :>> ', letters);
-console.log('...str :>> ', ...str);
+// // Iterables: arrays, strings, maps, sets, Not objects
+// const str = 'Alexander';
+// const letters = [...str, ' ', 'L.'];
+// console.log('letters :>> ', letters);
+// console.log('...str :>> ', ...str);
 
 // const ingredients = [
 //   prompt('Let\'s make pasta! Ingredient 1?'),
@@ -132,5 +137,42 @@ console.log('...str :>> ', ...str);
 // restaurant.orderPasta(...ingredients);
 
 // Objects
-const newRestaurant = {foundedIn: '1998', ...restaurant, founder: 'Guiseppe'};
-console.log('newRestaurant :>> ', newRestaurant);
+// const newRestaurant = {foundedIn: '1998', ...restaurant, founder: 'Guiseppe'};
+// console.log('newRestaurant :>> ', newRestaurant);
+
+/******************************************************************************
+ * Rest Pattern & Parameters
+ * Used to pack elements into an array
+ *****************************************************************************/
+// SPREAD, becuase on RIGHT side of =
+const arr = [1, 2, ...[3, 4]];
+console.log('arr :>> ', arr);
+// REST, becuase on LEFT side of =
+const [a, b, ...others] = [1, 2, 3, 4, 5];
+console.log('a, b, others :>> ', a, b, others);
+
+const [pizza, , risotto, ...otherFood] = [...restaurant.mainMenu, ...restaurant.starterMenu];
+console.log('pizza, risotto, otherFood :>> ', pizza, risotto, otherFood);
+
+const {fri, ...rest} = restaurant.openingHours;
+console.log('rest :>> ', rest);
+
+// Functions & Rest arguments
+const add = function(...values){
+  console.log('values :>> ', values);
+  let value = 0;
+  for (let x in values) {
+    value += Number(values[x]);
+  }
+  return value;
+}
+console.log(add(2, 3));
+console.log(add(5, 3, 7, 2));
+console.log(add(8, 2, 5, 3, 2, 1, 4));
+
+const x = [23, 5, 7];
+console.log(add(...x));
+
+restaurant.orderPizza('mushrooms', 'onion', 'olives', 'spinach');
+
+/*****************************************************************************/
