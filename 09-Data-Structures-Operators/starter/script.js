@@ -188,66 +188,107 @@ const restaurant = {
  * AND and OR Operators w/ non boolean variables
  * Can use ANY data type, return ANY data type, short-circuiting
  *****************************************************************************/
+// // With OR when evaluating an expression (truthy/falsy) will return the 1st 
+// // truety value found, e.g.
+// console.log('---- OR ----');
+// console.log(3 || 'SomeString');
+// // Will return 'SomeString'
+// console.log('' || 'SomeString');
+// // Will return true,
+// console.log(true || 0);
+// // Will return null, since both values are falsy will return last evaluated
+// console.log(undefined || null);
+// // In this example will return 'Hello', since undef, 0, empty string and 
+// // null are all nullish/falsy values
+// console.log(undefined || 0 || '' || null || 'Hello');
 
-// With OR when evaluating an expression (truthy/falsy) will return the 1st 
-// truety value found, e.g.
-console.log('---- OR ----');
-console.log(3 || 'SomeString');
-// Will return 'SomeString'
-console.log('' || 'SomeString');
-// Will return true,
-console.log(true || 0);
-// Will return null, since both values are falsy will return last evaluated
-console.log(undefined || null);
-// In this example will return 'Hello', since undef, 0, empty string and 
-// null are all nullish/falsy values
-console.log(undefined || 0 || '' || null || 'Hello');
 
+// // restaurant.numGuests = 23;
+// // NOTE: example will not work with the number 0 since this evaluates falsy
+// restaurant.numGuests = 0;
 
-// restaurant.numGuests = 23;
-// NOTE: example will not work with the number 0 since this evaluates falsy
-restaurant.numGuests = 0;
+// // Classic if/else 
+// const guests1 = restaurant.numGuests ? restaurant.numGuests : -1;
+// console.log('guests1 :>> ', guests1);
 
-// Classic if/else 
-const guests1 = restaurant.numGuests ? restaurant.numGuests : -1;
-console.log('guests1 :>> ', guests1);
+// // Short-circuiting w/ OR
+// const guests2 = restaurant.numGuests || -1;
+// console.log('guests2 :>> ', guests2);
 
-// Short-circuiting w/ OR
-const guests2 = restaurant.numGuests || -1;
-console.log('guests2 :>> ', guests2);
+// // With AND when evaluating an expression (truthy/falsy) will return the 1st 
+// // falsy value found, e.g.
+// console.log('---- AND ----');
+// // Will return 0, since this evaluates and short-circuits the && operator
+// console.log(0 && 'SomeString');
 
-// With AND when evaluating an expression (truthy/falsy) will return the 1st 
-// falsy value found, e.g.
-console.log('---- AND ----');
-// Will return 0, since this evaluates and short-circuits the && operator
-console.log(0 && 'SomeString');
+// // When result of evaluation is truthy, last value is returned
+// console.log(7 && 'SomeString');
 
-// When result of evaluation is truthy, last value is returned
-console.log(7 && 'SomeString');
+// // Will return null, since null is a falsy value
+// console.log('Hello' && 23 && null && 'SomeString');
 
-// Will return null, since null is a falsy value
-console.log('Hello' && 23 && null && 'SomeString');
+// // classic if checking for existance prior to execution of function
+// if (restaurant.orderPizza) {
+//   restaurant.orderPizza('mushrooms', 'spinach');
+// }
 
-// classic if checking for existance prior to execution of function
-if (restaurant.orderPizza) {
-  restaurant.orderPizza('mushrooms', 'spinach');
-}
-
-// with AND, short-circuiting if the 1st expression evaluates false then
-// what is right of the && in the expression will not execute.
-restaurant.orderPizza && restaurant.orderPizza('onions', 'olives');
+// // with AND, short-circuiting if the 1st expression evaluates false then
+// // what is right of the && in the expression will not execute.
+// restaurant.orderPizza && restaurant.orderPizza('onions', 'olives');
 
 /*****************************************************************************/
 
 /******************************************************************************
 * The Nullish Coalescing Operator (??)
 ******************************************************************************/
-restaurant.numGuests1 = 0;
-const guests3 = restaurant.numGuests1 || -1;
-console.log('guests3 :>> ', guests3);
+// restaurant.numGuests1 = 0;
+// const guests3 = restaurant.numGuests1 || -1;
+// console.log('guests3 :>> ', guests3);
 
-// Nullish: null and undefined (NOT 0 or '')
-const guests3Correct = restaurant.numGuests1 ?? -1;
-console.log('guests3Correct :>> ', guests3Correct);
+// // Nullish: null and undefined (NOT 0 or '')
+// const guests3Correct = restaurant.numGuests1 ?? -1;
+// console.log('guests3Correct :>> ', guests3Correct);
+
+/*****************************************************************************/
+
+/******************************************************************************
+* Logical Assignment Operations (ES2021)
+******************************************************************************/
+const rest1 = {
+  name: 'Capri',
+  numGuests: 0,
+};
+
+const rest2 = {
+  name: 'La Piazza',
+  owner: 'Giovanni Rossi',
+};
+
+// classic evaluation w/ OR
+// // returns rest1.numGuests if truthy, otherwise 10
+// rest1.numGuests = rest1.numGuests || 10;
+// // returns rest2.numGuests if truthy, otherwise 10
+// rest2.numGuests = rest2.numGuests || 10;
+
+// Logical Assignment
+rest1.numGuests ??= 10;
+rest2.numGuests ??= 10;
+
+console.log('rest1.numGuests :>> ', rest1.numGuests);
+console.log('rest2.numGuests :>> ', rest2.numGuests);
+
+// Anonymize owner using AND Logical Assignment operator, if left side
+// evaluates to false then right side doesn't happen
+
+rest1.owner &&= '<ANONYMOUS>';
+rest2.owner &&= '<ANONYMOUS>';
+console.log('rest1.owner :>> ', rest1.owner);
+console.log('rest2.owner :>> ', rest2.owner);
+
+/*****************************************************************************/
+
+/******************************************************************************
+* SECTION BLOCK TEMPLATE
+******************************************************************************/
 
 /*****************************************************************************/
