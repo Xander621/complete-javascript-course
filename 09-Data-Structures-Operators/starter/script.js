@@ -45,21 +45,21 @@ const restaurant = {
   },
 };
 
-restaurant.orderDelivery({
-  time: '22:30',
-  address: 'Via del Sole, 21',
-  mainIndex: 2,
-  starterIndex: 2,
-});
+// restaurant.orderDelivery({
+//   time: '22:30',
+//   address: 'Via del Sole, 21',
+//   mainIndex: 2,
+//   starterIndex: 2,
+// });
 
-restaurant.orderDelivery({
-  address: 'Via del Sole, 21',
-  starterIndex: 1,
-});
+// restaurant.orderDelivery({
+//   address: 'Via del Sole, 21',
+//   starterIndex: 1,
+// });
 
-/**
+/******************************************************************************
  * destructuring objects
- */
+ *****************************************************************************/
 // const {name, openingHours, categories} = restaurant;
 // console.log('name, openingHours, categories :>> ', name, openingHours, categories);
 
@@ -85,9 +85,11 @@ restaurant.orderDelivery({
 // } = openingHours;
 // console.log('o, c :>> ', o, c);
 
-/**
+/*****************************************************************************/
+
+/******************************************************************************
  * destructring arrays
- */ 
+ *****************************************************************************/ 
 // console.log(restaurant.order(2, 0));
 // const [appetizer, mainCourse] = restaurant.order(2, 0);
 // console.log(appetizer, mainCourse);
@@ -100,11 +102,13 @@ restaurant.orderDelivery({
 // const [i, ,[j, k]] = nested;
 // console.log(i, j, k);
 
-/**
+/*****************************************************************************/
+
+/******************************************************************************
  * Spread Operator
  * Can only be used to build an array or to pass arguments (comma delimited values)
  * to a function
- */
+ *****************************************************************************/
 // const arr = [7, 8, 9];
 // const badNewArr = [1, 2, arr[0], arr[1], arr[2]];
 // console.log('badNewArr :>> ', badNewArr);
@@ -140,39 +144,110 @@ restaurant.orderDelivery({
 // const newRestaurant = {foundedIn: '1998', ...restaurant, founder: 'Guiseppe'};
 // console.log('newRestaurant :>> ', newRestaurant);
 
+/*****************************************************************************/
+
 /******************************************************************************
  * Rest Pattern & Parameters
  * Used to pack elements into an array
  *****************************************************************************/
 // SPREAD, becuase on RIGHT side of =
-const arr = [1, 2, ...[3, 4]];
-console.log('arr :>> ', arr);
-// REST, becuase on LEFT side of =
-const [a, b, ...others] = [1, 2, 3, 4, 5];
-console.log('a, b, others :>> ', a, b, others);
+// const arr = [1, 2, ...[3, 4]];
+// console.log('arr :>> ', arr);
+// // REST, becuase on LEFT side of =
+// const [a, b, ...others] = [1, 2, 3, 4, 5];
+// console.log('a, b, others :>> ', a, b, others);
 
-const [pizza, , risotto, ...otherFood] = [...restaurant.mainMenu, ...restaurant.starterMenu];
-console.log('pizza, risotto, otherFood :>> ', pizza, risotto, otherFood);
+// const [pizza, , risotto, ...otherFood] = [...restaurant.mainMenu, ...restaurant.starterMenu];
+// console.log('pizza, risotto, otherFood :>> ', pizza, risotto, otherFood);
 
-const {fri, ...rest} = restaurant.openingHours;
-console.log('rest :>> ', rest);
+// const {fri, ...rest} = restaurant.openingHours;
+// console.log('rest :>> ', rest);
 
-// Functions & Rest arguments
-const add = function(...values){
-  console.log('values :>> ', values);
-  let value = 0;
-  for (let x in values) {
-    value += Number(values[x]);
-  }
-  return value;
+// // Functions & Rest arguments
+// const add = function(...values){
+//   console.log('values :>> ', values);
+//   let value = 0;
+//   for (let x in values) {
+//     value += Number(values[x]);
+//   }
+//   return value;
+// }
+// console.log(add(2, 3));
+// console.log(add(5, 3, 7, 2));
+// console.log(add(8, 2, 5, 3, 2, 1, 4));
+
+// const x = [23, 5, 7];
+// console.log(add(...x));
+
+// restaurant.orderPizza('mushrooms', 'onion', 'olives', 'spinach');
+
+/*****************************************************************************/
+
+/******************************************************************************
+ * Short Circuiting (&& and ||)
+ * AND and OR Operators w/ non boolean variables
+ * Can use ANY data type, return ANY data type, short-circuiting
+ *****************************************************************************/
+
+// With OR when evaluating an expression (truthy/falsy) will return the 1st 
+// truety value found, e.g.
+console.log('---- OR ----');
+console.log(3 || 'SomeString');
+// Will return 'SomeString'
+console.log('' || 'SomeString');
+// Will return true,
+console.log(true || 0);
+// Will return null, since both values are falsy will return last evaluated
+console.log(undefined || null);
+// In this example will return 'Hello', since undef, 0, empty string and 
+// null are all nullish/falsy values
+console.log(undefined || 0 || '' || null || 'Hello');
+
+
+// restaurant.numGuests = 23;
+// NOTE: example will not work with the number 0 since this evaluates falsy
+restaurant.numGuests = 0;
+
+// Classic if/else 
+const guests1 = restaurant.numGuests ? restaurant.numGuests : -1;
+console.log('guests1 :>> ', guests1);
+
+// Short-circuiting w/ OR
+const guests2 = restaurant.numGuests || -1;
+console.log('guests2 :>> ', guests2);
+
+// With AND when evaluating an expression (truthy/falsy) will return the 1st 
+// falsy value found, e.g.
+console.log('---- AND ----');
+// Will return 0, since this evaluates and short-circuits the && operator
+console.log(0 && 'SomeString');
+
+// When result of evaluation is truthy, last value is returned
+console.log(7 && 'SomeString');
+
+// Will return null, since null is a falsy value
+console.log('Hello' && 23 && null && 'SomeString');
+
+// classic if checking for existance prior to execution of function
+if (restaurant.orderPizza) {
+  restaurant.orderPizza('mushrooms', 'spinach');
 }
-console.log(add(2, 3));
-console.log(add(5, 3, 7, 2));
-console.log(add(8, 2, 5, 3, 2, 1, 4));
 
-const x = [23, 5, 7];
-console.log(add(...x));
+// with AND, short-circuiting if the 1st expression evaluates false then
+// what is right of the && in the expression will not execute.
+restaurant.orderPizza && restaurant.orderPizza('onions', 'olives');
 
-restaurant.orderPizza('mushrooms', 'onion', 'olives', 'spinach');
+/*****************************************************************************/
+
+/******************************************************************************
+* The Nullish Coalescing Operator (??)
+******************************************************************************/
+restaurant.numGuests1 = 0;
+const guests3 = restaurant.numGuests1 || -1;
+console.log('guests3 :>> ', guests3);
+
+// Nullish: null and undefined (NOT 0 or '')
+const guests3Correct = restaurant.numGuests1 ?? -1;
+console.log('guests3Correct :>> ', guests3Correct);
 
 /*****************************************************************************/
