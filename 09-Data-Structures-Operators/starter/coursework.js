@@ -27,19 +27,28 @@ const restaurant = {
     },
   },
 
-  order: function(starterIndex, mainIndex) {
+  order(starterIndex, mainIndex) {
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
   },
 
-  orderDelivery: function({starterIndex = 1, mainIndex = 0, time = '20:00', address = ''}) {
-    console.log(`Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}.`);
+  orderDelivery({
+    starterIndex = 1,
+    mainIndex = 0,
+    time = '20:00',
+    address = '',
+  }) {
+    console.log(
+      `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}.`
+    );
   },
 
-  orderPasta: function(ing1, ing2, ing3) {
-    console.log(`Here is your delicious pasta with ${ing1}, ${ing2} and ${ing3}!`);
+  orderPasta(ing1, ing2, ing3) {
+    console.log(
+      `Here is your delicious pasta with ${ing1}, ${ing2} and ${ing3}!`
+    );
   },
 
-  orderPizza: function(mainIngredient, ...otherIngredients) {
+  orderPizza(mainIngredient, ...otherIngredients) {
     console.log('mainIngredient :>> ', mainIngredient);
     console.log('otherIngredients :>> ', otherIngredients);
   },
@@ -63,7 +72,7 @@ const restaurant = {
 // const {name, openingHours, categories} = restaurant;
 // console.log('name, openingHours, categories :>> ', name, openingHours, categories);
 
-// // rename object properties to local variables 
+// // rename object properties to local variables
 // const {name: restaurantName, openingHours: hours, categories: tags} = restaurant;
 // console.log('restaurantName, hours, tags :>> ', restaurantName, hours, tags);
 
@@ -89,7 +98,7 @@ const restaurant = {
 
 /******************************************************************************
  * destructring arrays
- *****************************************************************************/ 
+ *****************************************************************************/
 // console.log(restaurant.order(2, 0));
 // const [appetizer, mainCourse] = restaurant.order(2, 0);
 // console.log(appetizer, mainCourse);
@@ -188,7 +197,7 @@ const restaurant = {
  * AND and OR Operators w/ non boolean variables
  * Can use ANY data type, return ANY data type, short-circuiting
  *****************************************************************************/
-// // With OR when evaluating an expression (truthy/falsy) will return the 1st 
+// // With OR when evaluating an expression (truthy/falsy) will return the 1st
 // // truety value found, e.g.
 // console.log('---- OR ----');
 // console.log(3 || 'SomeString');
@@ -198,16 +207,15 @@ const restaurant = {
 // console.log(true || 0);
 // // Will return null, since both values are falsy will return last evaluated
 // console.log(undefined || null);
-// // In this example will return 'Hello', since undef, 0, empty string and 
+// // In this example will return 'Hello', since undef, 0, empty string and
 // // null are all nullish/falsy values
 // console.log(undefined || 0 || '' || null || 'Hello');
-
 
 // // restaurant.numGuests = 23;
 // // NOTE: example will not work with the number 0 since this evaluates falsy
 // restaurant.numGuests = 0;
 
-// // Classic if/else 
+// // Classic if/else
 // const guests1 = restaurant.numGuests ? restaurant.numGuests : -1;
 // console.log('guests1 :>> ', guests1);
 
@@ -215,7 +223,7 @@ const restaurant = {
 // const guests2 = restaurant.numGuests || -1;
 // console.log('guests2 :>> ', guests2);
 
-// // With AND when evaluating an expression (truthy/falsy) will return the 1st 
+// // With AND when evaluating an expression (truthy/falsy) will return the 1st
 // // falsy value found, e.g.
 // console.log('---- AND ----');
 // // Will return 0, since this evaluates and short-circuits the && operator
@@ -239,8 +247,8 @@ const restaurant = {
 /*****************************************************************************/
 
 /******************************************************************************
-* The Nullish Coalescing Operator (??)
-******************************************************************************/
+ * The Nullish Coalescing Operator (??)
+ ******************************************************************************/
 // restaurant.numGuests1 = 0;
 // const guests3 = restaurant.numGuests1 || -1;
 // console.log('guests3 :>> ', guests3);
@@ -252,42 +260,180 @@ const restaurant = {
 /*****************************************************************************/
 
 /******************************************************************************
-* Logical Assignment Operations (ES2021)
-******************************************************************************/
-const rest1 = {
-  name: 'Capri',
-  numGuests: 0,
-};
+ * [SECTION 9 - 109] Logical Assignment Operations (ES2021)
+ ******************************************************************************/
+// const rest1 = {
+//   name: 'Capri',
+//   numGuests: 0,
+// };
 
-const rest2 = {
-  name: 'La Piazza',
-  owner: 'Giovanni Rossi',
-};
+// const rest2 = {
+//   name: 'La Piazza',
+//   owner: 'Giovanni Rossi',
+// };
 
-// classic evaluation w/ OR
-// // returns rest1.numGuests if truthy, otherwise 10
-// rest1.numGuests = rest1.numGuests || 10;
-// // returns rest2.numGuests if truthy, otherwise 10
-// rest2.numGuests = rest2.numGuests || 10;
+// // classic evaluation w/ OR
+// // // returns rest1.numGuests if truthy, otherwise 10
+// // rest1.numGuests = rest1.numGuests || 10;
+// // // returns rest2.numGuests if truthy, otherwise 10
+// // rest2.numGuests = rest2.numGuests || 10;
 
-// Logical Assignment
-rest1.numGuests ??= 10;
-rest2.numGuests ??= 10;
+// // Logical Assignment
+// rest1.numGuests ??= 10;
+// rest2.numGuests ??= 10;
 
-console.log('rest1.numGuests :>> ', rest1.numGuests);
-console.log('rest2.numGuests :>> ', rest2.numGuests);
+// console.log('rest1.numGuests :>> ', rest1.numGuests);
+// console.log('rest2.numGuests :>> ', rest2.numGuests);
 
-// Anonymize owner using AND Logical Assignment operator, if left side
-// evaluates to false then right side doesn't happen
-rest1.owner &&= '<ANONYMOUS>';
-rest2.owner &&= '<ANONYMOUS>';
-console.log('rest1.owner :>> ', rest1.owner);
-console.log('rest2.owner :>> ', rest2.owner);
+// // Anonymize owner using AND Logical Assignment operator, if left side
+// // evaluates to false then right side doesn't happen
+// rest1.owner &&= '<ANONYMOUS>';
+// rest2.owner &&= '<ANONYMOUS>';
+// console.log('rest1.owner :>> ', rest1.owner);
+// console.log('rest2.owner :>> ', rest2.owner);
 
-/*****************************************************************************/
+/***********************[END OF SECTION 9-109]********************************/
 
 /******************************************************************************
-* SECTION BLOCK TEMPLATE
-******************************************************************************/
+ * [SECTION 9 - 111] Looping Arrays: The for-of Loop
+ ******************************************************************************/
+// const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
 
-/*****************************************************************************/
+// for (const item of menu) console.log(item);
+
+// // entries (Array Iterator) stores an array of the index and string into item
+// // Using destructuring of menu.entries() to get variables for the index and
+// // the name
+// for (const [index, name] of menu.entries()) {
+//   console.log(`${index + 1}: ${name}`);
+// }
+
+// console.log('menu.entries() :>> ', [...menu.entries()]);
+
+/***********************[END OF SECTION 9-111]********************************/
+
+/******************************************************************************
+ * [SECTION 9 - 112] Enhanced Object Literals
+ * Using the restaurant object & modifying it a bit to move the openingHours
+ * object external to the restaurant object.
+ ******************************************************************************/
+// // Compute property names instead of writing them out explictly
+// const daysOfTheWeek = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+// const openingHours = {
+//   [daysOfTheWeek[3]]: {
+//     open: 12,
+//     close: 22,
+//   },
+//   [daysOfTheWeek[4]]: {
+//     open: 11,
+//     close: 23,
+//   },
+//   sat: {
+//     open: 0, // Open 24 hours
+//     close: 24,
+//   },
+// };
+
+// const restaurant1 = {
+//   name: 'Classico Italiano',
+//   location: 'Via Angelo Tavanti 23, Firenze, Italy',
+//   categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+//   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+//   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+//   // Before ES6 - had to use key:value pair
+//   // openingHours: openingHours,
+
+//   // ES6 Enhanced object literals
+//   openingHours,
+
+//   // ES6 don't need a property set w/ function expression
+//   // Before ES6
+//   // order: function(starterIndex, mainIndex) {
+//   //   return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+//   // },
+//   // ES6 enhanced object literals
+//   order(starterIndex, mainIndex) {
+//     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+//   },
+
+// };
+
+// console.log('restaurant1 :>> ', restaurant1);
+/***********************[END OF SECTION 9-112]********************************/
+
+/******************************************************************************
+ * [SECTION 9-113] Optional Chaining (?.)
+ ******************************************************************************/
+// // Currently no property for 'mon' exists so trying to get the open property
+// // causes an error...  This is an example of how using an 3rd
+// // party API might cause a bug if things change. So how do we avoid this?
+// // Old way
+// if (restaurant.openingHours && restaurant.openingHours.mon) console.log(restaurant.openingHours.mon.open);
+
+// // Using Optional Chaining
+// // ?. evaluates the left side 1st and only then evaluates the right side if
+// // the left side is not null or undefined... can be chained to test for
+// // multiple levels, e.g. checking for opening hours before checking for mon
+// console.log(restaurant.openingHours?.mon?.open);
+
+// //Example
+// const daysOfTheWeek = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+// for(const day of daysOfTheWeek) {
+//   console.log('day :>> ', day);
+//   const open = restaurant.openingHours[day]?.open ?? 'closed';
+//   if(open === undefined) break;
+//   if(open === 'closed') {
+//     console.log(`On ${day}, we are ${open}`);
+//   } else {
+//     console.log(`On ${day}, we open at ${open}`);
+//   }
+// }
+//   // Methods - check whether a method exists prior to calling it
+//   console.log(restaurant.order?.(0,1) ?? 'Method does not exist');
+//   console.log(restaurant.orderRisotto?.() ?? 'Method does not exist');
+
+//   // Arrays - check if array is empty
+//   const users = [
+//     {name: 'Alex', email: 'alex@lance-technologies.com', phone: '303-555-2222'},
+//     {name: 'John', email: 'john@lance-technologies.com'},
+//     {name: 'Jane', email: 'jane@lance-technologies.com'},
+//   ];
+
+//   console.log(users[0]?.name ?? 'Array empty or name does not exist');
+//   console.log(users[1]?.phone ?? 'Array empty or phone does not exist');
+
+/***********************[END OF SECTION 9-113]********************************/
+
+/******************************************************************************
+ * [SECTION 9-114] Looping Objects: Object Keys, Values and Entries
+ ******************************************************************************/
+// Looping over keys
+for (const key of Object.keys(restaurant.openingHours)) {
+  console.log('key :>> ', key);
+}
+
+const properties = Object.keys(restaurant.openingHours);
+console.log('properties :>> ', properties);
+
+// Looping over values
+for (const value of Object.values(restaurant.openingHours)) {
+  console.log('value :>> ', value);
+}
+
+// Looping over entries
+for (const entry of Object.entries(restaurant.openingHours)) {
+  console.log('entry :>> ', entry);
+}
+
+// Looping over entries and using destructuring to get open/closing for the restaurant
+for (const [day, { open, close }] of Object.entries(restaurant.openingHours)) {
+  console.log(`On ${day} we open at ${open} and close at ${close}.`);
+}
+
+/***********************[END OF SECTION 9-114]********************************/
+
+/******************************************************************************
+ * [SECTION BLOCK TEMPLATE]
+ ******************************************************************************/
+
+/***********************[END OF SECTION]**************************************/
