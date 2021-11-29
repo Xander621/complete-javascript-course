@@ -407,30 +407,76 @@ const restaurant = {
 /******************************************************************************
  * [SECTION 9-114] Looping Objects: Object Keys, Values and Entries
  ******************************************************************************/
-// Looping over keys
-for (const key of Object.keys(restaurant.openingHours)) {
-  console.log('key :>> ', key);
-}
+// // Looping over keys
+// for (const key of Object.keys(restaurant.openingHours)) {
+//   console.log('key :>> ', key);
+// }
 
-const properties = Object.keys(restaurant.openingHours);
-console.log('properties :>> ', properties);
+// const properties = Object.keys(restaurant.openingHours);
+// console.log('properties :>> ', properties);
 
-// Looping over values
-for (const value of Object.values(restaurant.openingHours)) {
-  console.log('value :>> ', value);
-}
+// // Looping over values
+// for (const value of Object.values(restaurant.openingHours)) {
+//   console.log('value :>> ', value);
+// }
 
-// Looping over entries
-for (const entry of Object.entries(restaurant.openingHours)) {
-  console.log('entry :>> ', entry);
-}
+// // Looping over entries
+// for (const entry of Object.entries(restaurant.openingHours)) {
+//   console.log('entry :>> ', entry);
+// }
 
-// Looping over entries and using destructuring to get open/closing for the restaurant
-for (const [day, { open, close }] of Object.entries(restaurant.openingHours)) {
-  console.log(`On ${day} we open at ${open} and close at ${close}.`);
-}
+// // Looping over entries and using destructuring to get open/closing for the restaurant
+// for (const [day, { open, close }] of Object.entries(restaurant.openingHours)) {
+//   console.log(`On ${day} we open at ${open} and close at ${close}.`);
+// }
 
 /***********************[END OF SECTION 9-114]********************************/
+
+/******************************************************************************
+ * [SECTION 9-116] Sets
+ * Set objects are collections of values. You can iterate through the elements
+ * of a set in insertion order. A value in the Set may only occur once; it is
+ * unique in the Set's collection.
+ ******************************************************************************/
+const orderSet = new Set([
+  'Pasta',
+  'Pizza',
+  'Pizza',
+  'Risotto',
+  'Pasta',
+  'Pizza',
+]);
+// Notice that only one Pizza is in the Set's collection
+console.log('orderSet :>> ', orderSet);
+
+// Creates a Set based on the strings characters. Minus one 'l'
+console.log(new Set('Hello'));
+
+console.log('orderSet.size :>> ', orderSet.size);
+console.log("orderSet.has('Pizza') :>> ", orderSet.has('Pizza'));
+console.log("orderSet.has('Bread') :>> ", orderSet.has('Bread'));
+
+orderSet.add('Garlic Bread');
+// Again this will not add an additional value for Garlic Bread since it is
+// already part of the Set
+orderSet.add('Garlic Bread');
+
+orderSet.delete('Risotto');
+console.log('orderSet :>> ', orderSet);
+
+for (const order of orderSet) console.log('order :>> ', order);
+
+// delete all elements of a set
+orderSet.clear();
+
+// Example use case to why you would use a set would be to remove duplicate
+// entries in an array
+const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter'];
+// Using spread operator to iterate over the Set to create a new array staffUnique
+const staffUnique = [...new Set(staff)];
+console.log('staffUnique :>> ', staffUnique);
+
+/***********************[END OF SECTION 9-116]*********************************/
 
 /******************************************************************************
  * [SECTION BLOCK TEMPLATE]
