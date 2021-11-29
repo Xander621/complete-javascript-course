@@ -438,45 +438,94 @@ const restaurant = {
  * of a set in insertion order. A value in the Set may only occur once; it is
  * unique in the Set's collection.
  ******************************************************************************/
-const orderSet = new Set([
-  'Pasta',
-  'Pizza',
-  'Pizza',
-  'Risotto',
-  'Pasta',
-  'Pizza',
-]);
-// Notice that only one Pizza is in the Set's collection
-console.log('orderSet :>> ', orderSet);
+// const orderSet = new Set([
+//   'Pasta',
+//   'Pizza',
+//   'Pizza',
+//   'Risotto',
+//   'Pasta',
+//   'Pizza',
+// ]);
+// // Notice that only one Pizza is in the Set's collection
+// console.log('orderSet :>> ', orderSet);
 
-// Creates a Set based on the strings characters. Minus one 'l'
-console.log(new Set('Hello'));
+// // Creates a Set based on the strings characters. Minus one 'l'
+// console.log(new Set('Hello'));
 
-console.log('orderSet.size :>> ', orderSet.size);
-console.log("orderSet.has('Pizza') :>> ", orderSet.has('Pizza'));
-console.log("orderSet.has('Bread') :>> ", orderSet.has('Bread'));
+// console.log('orderSet.size :>> ', orderSet.size);
+// console.log("orderSet.has('Pizza') :>> ", orderSet.has('Pizza'));
+// console.log("orderSet.has('Bread') :>> ", orderSet.has('Bread'));
 
-orderSet.add('Garlic Bread');
-// Again this will not add an additional value for Garlic Bread since it is
-// already part of the Set
-orderSet.add('Garlic Bread');
+// orderSet.add('Garlic Bread');
+// // Again this will not add an additional value for Garlic Bread since it is
+// // already part of the Set
+// orderSet.add('Garlic Bread');
 
-orderSet.delete('Risotto');
-console.log('orderSet :>> ', orderSet);
+// orderSet.delete('Risotto');
+// console.log('orderSet :>> ', orderSet);
 
-for (const order of orderSet) console.log('order :>> ', order);
+// for (const order of orderSet) console.log('order :>> ', order);
 
-// delete all elements of a set
-orderSet.clear();
+// // delete all elements of a set
+// orderSet.clear();
 
-// Example use case to why you would use a set would be to remove duplicate
-// entries in an array
-const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter'];
-// Using spread operator to iterate over the Set to create a new array staffUnique
-const staffUnique = [...new Set(staff)];
-console.log('staffUnique :>> ', staffUnique);
+// // Example use case to why you would use a set would be to remove duplicate
+// // entries in an array
+// const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter'];
+// // Using spread operator to iterate over the Set to create a new array staffUnique
+// const staffUnique = [...new Set(staff)];
+// console.log('staffUnique :>> ', staffUnique);
 
 /***********************[END OF SECTION 9-116]*********************************/
+
+/******************************************************************************
+ * [SECTION 9-117] Maps: Fundamentals
+ * The Map object holds key-value pairs and remembers the original insertion
+ * order of the keys. Any value (both objects and primitive values) may be used
+ * as either a key or a value.
+ ******************************************************************************/
+const restaurantMap = new Map();
+restaurantMap.set('name', 'Classico Italiano');
+restaurantMap.set(1, 'Firenze, Italy');
+restaurantMap.set(2, 'Lisbon, Portugal');
+console.log('restaurantMap :>> ', restaurantMap);
+
+restaurantMap
+  .set('categories', [...restaurant.categories])
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'We are open :)')
+  .set(false, 'We are closed :(');
+
+console.log('restaurantMap :>> ', restaurantMap);
+
+console.log('restaurantMap.get(true) :>> ', restaurantMap.get(true));
+
+// Using boolean evaluation to get Map key-value pair for true/false (for fun)
+// const time = 21; // true
+const time = 8; // false
+console.log(
+  restaurantMap.get(
+    time > restaurantMap.get('open') && time < restaurantMap.get('close')
+  )
+);
+
+console.log(
+  "restaurantMap.has('categories') :>> ",
+  restaurantMap.has('categories')
+);
+
+restaurantMap.delete(2);
+console.log('restaurantMap :>> ', restaurantMap);
+console.log('restaurantMap size :>> ', restaurantMap.size);
+
+// deletes all map key-value pairs
+restaurantMap.clear();
+
+restaurantMap.set(document.querySelector('h1'), 'Heading');
+console.log('restaurantMap :>> ', restaurantMap);
+
+/***********************[END OF SECTION 9-117]*********************************/
 
 /******************************************************************************
  * [SECTION BLOCK TEMPLATE]
