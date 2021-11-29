@@ -484,46 +484,85 @@ const restaurant = {
  * order of the keys. Any value (both objects and primitive values) may be used
  * as either a key or a value.
  ******************************************************************************/
-const restaurantMap = new Map();
-restaurantMap.set('name', 'Classico Italiano');
-restaurantMap.set(1, 'Firenze, Italy');
-restaurantMap.set(2, 'Lisbon, Portugal');
-console.log('restaurantMap :>> ', restaurantMap);
+// const restaurantMap = new Map();
+// restaurantMap.set('name', 'Classico Italiano');
+// restaurantMap.set(1, 'Firenze, Italy');
+// restaurantMap.set(2, 'Lisbon, Portugal');
+// console.log('restaurantMap :>> ', restaurantMap);
 
-restaurantMap
-  .set('categories', [...restaurant.categories])
-  .set('open', 11)
-  .set('close', 23)
-  .set(true, 'We are open :)')
-  .set(false, 'We are closed :(');
+// restaurantMap
+//   .set('categories', [...restaurant.categories])
+//   .set('open', 11)
+//   .set('close', 23)
+//   .set(true, 'We are open :)')
+//   .set(false, 'We are closed :(');
 
-console.log('restaurantMap :>> ', restaurantMap);
+// console.log('restaurantMap :>> ', restaurantMap);
 
-console.log('restaurantMap.get(true) :>> ', restaurantMap.get(true));
+// console.log('restaurantMap.get(true) :>> ', restaurantMap.get(true));
 
-// Using boolean evaluation to get Map key-value pair for true/false (for fun)
-// const time = 21; // true
-const time = 8; // false
-console.log(
-  restaurantMap.get(
-    time > restaurantMap.get('open') && time < restaurantMap.get('close')
-  )
-);
+// // Using boolean evaluation to get Map key-value pair for true/false (for fun)
+// // const time = 21; // true
+// const time = 8; // false
+// console.log(
+//   restaurantMap.get(
+//     time > restaurantMap.get('open') && time < restaurantMap.get('close')
+//   )
+// );
 
-console.log(
-  "restaurantMap.has('categories') :>> ",
-  restaurantMap.has('categories')
-);
+// console.log(
+//   "restaurantMap.has('categories') :>> ",
+//   restaurantMap.has('categories')
+// );
 
-restaurantMap.delete(2);
-console.log('restaurantMap :>> ', restaurantMap);
-console.log('restaurantMap size :>> ', restaurantMap.size);
+// restaurantMap.delete(2);
+// console.log('restaurantMap :>> ', restaurantMap);
+// console.log('restaurantMap size :>> ', restaurantMap.size);
 
-// deletes all map key-value pairs
-restaurantMap.clear();
+// // deletes all map key-value pairs
+// restaurantMap.clear();
 
-restaurantMap.set(document.querySelector('h1'), 'Heading');
-console.log('restaurantMap :>> ', restaurantMap);
+// restaurantMap.set(document.querySelector('h1'), 'Heading');
+// console.log('restaurantMap :>> ', restaurantMap);
+
+/***********************[END OF SECTION 9-117]*********************************/
+
+/******************************************************************************
+ * [SECTION 9-118] Maps: Iteration
+ ******************************************************************************/
+// create a new map with some pre-canned data using an array for key-value pairs
+const question = new Map([
+  ['question', 'What is the best programming language in the world?'],
+  [1, 'C'],
+  [2, 'Java'],
+  [3, 'JavaScript'],
+  ['correct', 3],
+  [true, 'Correct!'],
+  [false, 'Try Again.'],
+]);
+console.log('question :>> ', question);
+
+// Convert object to map
+console.log('openingHours :>> ', Object.entries(restaurant.openingHours));
+const hoursMap = new Map(Object.entries(restaurant.openingHours));
+console.log('hoursMap :>> ', hoursMap);
+
+// Iteration of question map
+for (const [key, value] of question) {
+  if (typeof key === 'number') console.log(`Answer ${key}: ${value}`);
+}
+
+// const answer = Number(prompt('Your answer?'));
+const answer = 3;
+console.log('answer :>> ', answer);
+
+// Return the true/false map value for the user's answer
+console.log(question.get(question.get('correct') === answer));
+
+// Convert map to array
+console.log([...question]);
+console.log([...question.keys()]);
+console.log([...question.values()]);
 
 /***********************[END OF SECTION 9-117]*********************************/
 
