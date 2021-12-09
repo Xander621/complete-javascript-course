@@ -6,11 +6,11 @@
 // const bookings = [];
 
 // const createBooking = function(
-//   flightNum, 
-//   numPassengers = 1, 
+//   flightNum,
+//   numPassengers = 1,
 //   price = 199 * numPassengers
 //   ) {
-//   // In ES6, default values can be set in the Parameters declaration of the 
+//   // In ES6, default values can be set in the Parameters declaration of the
 //   // function instead of ES5 w/ falsey value set default values using 'OR'
 //   // numPassengers = numPassengers || 1;
 //   // price = price || 199;
@@ -31,7 +31,6 @@
 
 // // skipping a parameter using undefined
 // createBooking('LH123', undefined,  1000);
-
 
 // console.log('bookings :>> ', bookings);
 
@@ -71,31 +70,31 @@
 
 /***********************[END OF 10-129]**************************************/
 
- /******************************************************************************
+/******************************************************************************
  * [SECTION 10-130] First-Class and Higher-Order Functions
  ******************************************************************************/
-  /* FIRST-CLASS FUNCTIONS
-  * * Javascript treats functions as first-class citizens, i.e.
-  * * this means that functions are treated simply as values
-  * * Functions are just another 'type' of object
-  * * Store functions in variables or properties:
-  * const add = (a,b) => a + b;
-  * const counter = {
-  *   value: 23,
-  *   inc: function() {this.value++;}
-  * }
-  *
-  * * Pass functions as arguments to OTHER functions:
-  * const greet = () => console.log('Hello');
-  * btnClose.addEventListener('click', greet);
-  *
-  * * Return fucntions FROM functions
-  * 
-  * * Call methods on functions:
-  * counter.inc.bind(someOtherObject);
-  */
+/* FIRST-CLASS FUNCTIONS
+ * * Javascript treats functions as first-class citizens, i.e.
+ * * this means that functions are treated simply as values
+ * * Functions are just another 'type' of object
+ * * Store functions in variables or properties:
+ * const add = (a,b) => a + b;
+ * const counter = {
+ *   value: 23,
+ *   inc: function() {this.value++;}
+ * }
+ *
+ * * Pass functions as arguments to OTHER functions:
+ * const greet = () => console.log('Hello');
+ * btnClose.addEventListener('click', greet);
+ *
+ * * Return fucntions FROM functions
+ *
+ * * Call methods on functions:
+ * counter.inc.bind(someOtherObject);
+ */
 
-  /* HIGHER-ORDER FUNCTIONS
+/* HIGHER-ORDER FUNCTIONS
    * * A Function that receives another function as an argument, that returns a
    *   new function, or both
    * * This is only possible because of first-class functions
@@ -117,10 +116,119 @@
 
  /***********************[END OF 10-130]**************************************/
 
+/******************************************************************************
+ * [SECTION 10-131] Functions: Accepting Callback Functions
+ ******************************************************************************/
+// /**
+//  * Take a string and return a new string without spaces and lower case
+//  * @param {} str
+//  * @returns string all lower case and no spacing
+//  */
+// const oneWord = function (str) {
+//   return str.replace(/ /g, '').toLowerCase();
+// };
 
- /******************************************************************************
+// /**
+//  * Transform the first word to upper case
+//  * @param {*} str
+//  */
+// const upperFirstWord = function (str) {
+//   const [first, ...others] = str.split(' ');
+//   return [first.toUpperCase(), ...others].join(' ');
+// };
+
+// /**
+//  * Higher order function
+//  */
+// const transformer = function (str, fn) {
+//   console.log(`Original string: ${str}`);
+//   console.log(`Transformed string: ${fn(str)}`);
+//   console.log(`Transformed by: ${fn.name}`);
+// };
+
+// transformer('JavaScript is the best!', upperFirstWord);
+
+// const sayHello = function () {
+//   console.log('Hello!');
+// };
+
+// document.body.addEventListener('click', sayHello);
+
+/***********************[END OF 10-131]**************************************/
+
+/******************************************************************************
+ * [SECTION 10-132] Functions: Returning Functions
+ ******************************************************************************/
+// const greet = greeting => {
+//   return name => {
+//     console.log(`${greeting} ${name}`);
+//   };
+// };
+
+// // The above function rewritten w/ just arrow functions - less readable
+// const greet2 = greeting => name => console.log(`${greeting} ${name}`);
+
+// const greeter = greet('Hey');
+// greeter('Jonas');
+// greeter('Steven');
+// greet('Hello')('Kevin');
+// greet2('Hi')('Bob');
+/***********************[END OF 10-132]**************************************/
+
+/******************************************************************************
+ * [SECTION 10-133] The call and apply Methods
+ ******************************************************************************/
+const lufthansa = {
+  airline: 'lufthansa',
+  iataCode: 'LH',
+  bookings: [],
+  book(flightNum, name) {
+    console.log(
+      `${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`
+    );
+    this.bookings.push({ flight: `${this.iataCode}${flightNum}`, name });
+  },
+};
+lufthansa.book(2354, 'Jonas Schmedtmann');
+lufthansa.book(635, 'Mike Smith');
+console.log('lufthansa :>> ', lufthansa);
+
+const eurowings = {
+  airline: 'Eurowings',
+  iataCode: 'EW',
+  bookings: [],
+};
+
+const book = lufthansa.book;
+
+// this will return undefined since it has been pulled out as a function and not
+// attached to the lufthansa object so 'this' is undefined
+// book(23, 'Sarah Williams');
+
+// using the call method we can set 'this' to eurowings and then use the book
+// function
+book.call(eurowings, 23, 'Sarah Williams');
+console.log('eurowings :>> ', eurowings);
+
+const swiss = {
+  airline: 'Swiss Airlines',
+  iataCode: 'LX',
+  bookings: [],
+};
+
+// Apply method
+const flightData = [583, 'George Cooper'];
+book.apply(swiss, flightData);
+console.log('swiss :>> ', swiss);
+
+// or you can just spread flight data using call
+book.call(swiss, ...flightData);
+console.log('swiss :>> ', swiss);
+
+/***********************[END OF 10-133]**************************************/
+
+/******************************************************************************
  * [SECTION 10-1##]
  ******************************************************************************/
 
- 
- /***********************[END OF 10-1##]**************************************/
+/***********************[END OF 10-1##]**************************************/
