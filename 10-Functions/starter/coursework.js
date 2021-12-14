@@ -228,6 +228,59 @@ console.log('swiss :>> ', swiss);
 /***********************[END OF 10-133]**************************************/
 
 /******************************************************************************
+ * [SECTION 10-134] The bind method
+ * The bind() method creates a new function that, when called, has its this 
+ * keyword set to the provided value, with a given sequence of arguments 
+ * preceding any provided when the new function is called. 
+ ******************************************************************************/
+
+// Examples of using bind to create functions that set the 'this' keyworkd to 
+// the specific airline object.
+const bookEW = book.bind(eurowings);
+const bookLH = book.bind(lufthansa);
+const bookLX = book.bind(swiss);
+
+bookEW(23, 'Steven Williams');
+
+// Here's an example of using bind to set the some arguments (partial application),
+// in this case the flight number
+const bookEW23 = book.bind(eurowings, 23);
+bookEW23('Jonas Schmedtmann');
+bookEW23('Marta Cooper');
+
+// With Event Listeners
+lufthansa.planes = 300;
+lufthansa.buyPlane = function() {
+  console.log(this);
+
+  this.planes++;
+  console.log(this.planes);
+};
+
+// We don't want the 'this' keyword to point to the 'buy' button element so
+// we need to bind to the lufthansa object 
+document
+  .querySelector('.buy')
+  .addEventListener('click', lufthansa.buyPlane.bind(lufthansa));
+
+// Partial application -> means presetting parameters/args
+const addTax = (rate, value) => value + value * rate;
+console.log(addTax(0.1, 200));
+
+// Create a function with a preset tax rate of 23%
+const addVAT = addTax.bind(null, 0.23);
+console.log(addVAT(200));
+
+// Challenge: rewrite the addVAT function to return a function with the tax rate
+const addTaxRate = (rate) => addTax.bind(null, rate);
+
+const rate8percent = addTaxRate(0.08);
+console.log(rate8percent(10));
+
+
+/***********************[END OF 10-134]**************************************/
+
+/******************************************************************************
  * [SECTION 10-1##]
  ******************************************************************************/
 
