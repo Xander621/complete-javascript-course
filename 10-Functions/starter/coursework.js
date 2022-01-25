@@ -285,27 +285,27 @@
  * Used when you want a function to be executed only once.  Used w/ Async/Await.
  * 
  ******************************************************************************/
-// This function can be called multiple times, so how do we write it as an IIFE?
-const runOnce = function () {
-  console.log('This will run again');
-}
-runOnce();
+// // This function can be called multiple times, so how do we write it as an IIFE?
+// const runOnce = function () {
+//   console.log('This will run again');
+// }
+// runOnce();
 
-// Wrap as an expression, and immediately call it. This is an IIFE
-(function() {
-  console.log('This will never run again');
-})();
+// // Wrap as an expression, and immediately call it. This is an IIFE
+// (function() {
+//   console.log('This will never run again');
+// })();
 
-// As an arrow function.
-(() => console.log('This will ALSO never run again'))();
+// // As an arrow function.
+// (() => console.log('This will ALSO never run again'))();
 
-// ES6 block example let/const are encapsulated
-{
-  const isPrivate = 23;
-  var notPrivate = 46;
-}
-// console.log(isPrivate); // this is not defince
-console.log(notPrivate);
+// // ES6 block example let/const are encapsulated
+// {
+//   const isPrivate = 23;
+//   var notPrivate = 46;
+// }
+// // console.log(isPrivate); // this is not defince
+// console.log(notPrivate);
 
 
 /***********************[END OF 10-136]**************************************/
@@ -350,46 +350,45 @@ console.log(notPrivate);
 /******************************************************************************
  * [SECTION 10-138] More Closure Examples
  ******************************************************************************/
-let f;
+// let f;
 
-const g = function() {
-  const a = 23;
-  f = function() {
-    console.log(`1st:`, a * 2);
-  };
-};
+// const g = function() {
+//   const a = 23;
+//   f = function() {
+//     console.log(`1st:`, a * 2);
+//   };
+// };
 
-const h = function() {
-  const b = 777;
-  f = function() {
-    console.log(`2nd:`, b * 2);
-  };
-};
+// const h = function() {
+//   const b = 777;
+//   f = function() {
+//     console.log(`2nd:`, b * 2);
+//   };
+// };
 
-g();
-f(); // closure of g()
-console.dir(f);
+// g();
+// f(); // closure of g()
+// console.dir(f);
 
-// Re-assigning f function
-h();
-f(); // closure of h()
-console.dir(f);
+// // Re-assigning f function
+// h();
+// f(); // closure of h()
+// console.dir(f);
 
 
-// Example 2
-const boardPassengers = function(n, wait) {
-  const perGroup = n / 3;
+// // Example 2
+// const boardPassengers = function(n, wait) {
+//   const perGroup = n / 3;
 
-  setTimeout(() => {
-    console.log('TIMER');
-  }, 1000);
+//   setTimeout(() => {
+//     console.log(`We are now boarding all ${n} passengers`);
+//     console.log(`There are 3 groups, each with ${perGroup} passengers.`);
+//   }, wait * 1000);
 
-  console.log(`Will start boarding in ${wait} seconds.`);
-}
+//   console.log(`Will start boarding in ${wait} seconds.`);
+// }
 
-setTimeout(() => {
-  console.log('1 second delay');
-}, 1000);
+// boardPassengers(180, 5);
 /***********************[END OF 10-138]**************************************/
 
 /******************************************************************************
