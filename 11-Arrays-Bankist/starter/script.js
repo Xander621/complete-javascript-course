@@ -310,13 +310,22 @@ GOOD LUCK 😀
 
 // Coding Challenge #3 
 // Chaining calcAverageHumanAge
-const calcAverageHumanAge = function(dogAges) {
-  return dogAges.map((age) => age > 2 ? 16 + age * 4 : age * 2)
-    .filter((age) => age > 18)
-    .reduce((acc, age, i, arr) => {
-    return acc + (age / arr.length);
-  }, 0);
-}
-console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
-console.log(calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]));
+// const calcAverageHumanAge = function(dogAges) {
+//   return dogAges.map((age) => age > 2 ? 16 + age * 4 : age * 2)
+//     .filter((age) => age > 18)
+//     .reduce((acc, age, i, arr) => {
+//     return acc + (age / arr.length);
+//   }, 0);
+// }
+// console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
+// console.log(calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]));
+
+const firstWithdrawal = transactions.find(tr => tr < 0);
+console.log(transactions);
+console.log(firstWithdrawal);
+
+console.log(accounts);
+
+const account = accounts.find(acc => acc.owner === 'Jessica Davis');
+console.log(account);
 
