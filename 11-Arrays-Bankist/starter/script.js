@@ -61,10 +61,13 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-
-const _displayTransactions = function(transactions) {
+/**
+ * Updates the UI transactions elements based on the user account provided
+ * @param  {} account
+ */
+const _displayTransactions = function(account) {
   containerTransactions.innerHTML = '';
-  transactions.forEach((tr, i) => {
+  account.transactions.forEach((tr, i) => {
     const type = tr > 0 ? 'deposit' : 'withdrawal';
 
     const html = `
@@ -78,45 +81,48 @@ const _displayTransactions = function(transactions) {
   });
 }
 
-_displayTransactions(account1.transactions);
-
-const _calcBalanceAndDisplay = function(transactions) {
-  const bal = transactions.reduce((acc, tr) => {
+/**
+ * Calculates and displays the account balance based on the user account provided
+ * @param  {} account
+ */
+const _calcBalanceAndDisplay = function(account) {
+  const bal = account.transactions.reduce((acc, tr) => {
     return acc + tr;
   }, 0);
   
   labelBalance.textContent = `${bal}\u20AC`;
 }
 
-_calcBalanceAndDisplay(account1.transactions);
-
-const _calcSummariesAndDisplay = function(transactions) {
+/**
+ * Calculates and displays the account summary based on the user account provided
+ * @param  {} account
+ */
+const _calcSummariesAndDisplay = function(account) {
   // Deposits
-  const deposits = transactions
+  const deposits = account.transactions
     .filter(tr => tr > 0)
     .reduce((acc, tr) => acc + tr, 0);
   labelSumIn.textContent = `${deposits}\u20AC`;
   
   // Withdrawals
-  const withdrawals = transactions
+  const withdrawals = account.transactions
     .filter(tr => tr < 0)
     .reduce((acc, tr) => acc + tr, 0);
   labelSumOut.textContent = `${Math.abs(withdrawals)}\u20AC`;
 
-  // Interest 1.2% of deposits if at least 1 euro
-  const interest = transactions
+  // Interest of deposits if at least 1 euro
+  const interest = account.transactions
     .filter(tr => tr > 0)
-    .map(deposit => deposit * 0.012)
+    .map(deposit => deposit * account.interestRate)
     .filter(tr => tr >= 1)
     .reduce((acc, tr) => acc + tr, 0);
   labelSumInterest.textContent = `${interest}\u20AC`;
 }
 
-_calcSummariesAndDisplay(account1.transactions);
 
 /**
- * 
- * @param {*} user 
+ * Takes a owner string and creates a lowercase username from the first letter of each word
+ * @param {*} 
  * @returns string containing 1st lower case letter of each name;first, middle, last. 
  */
  const setUserName = function(user) {
@@ -129,7 +135,7 @@ _calcSummariesAndDisplay(account1.transactions);
 }
 
 /**
- * Add a username to each of the user accounts in the accounts array
+ * Add a username to each of the user accounts objects listed in the accounts array
  * @param {*} accounts 
  */
 const _addUserNameToAccount = function(accounts) {
@@ -138,8 +144,44 @@ const _addUserNameToAccount = function(accounts) {
   })
 }
 
+// Populate usernames to the individual account objects
 _addUserNameToAccount(accounts);
-// console.log(accounts);
+
+
+// Event handlers
+let currentAccount;
+
+btnLogin.addEventListener('click', (event) => {
+  event.preventDefault();  // prevent form from submitting
+
+  const currentAccount = accounts.find(account => account.username === inputLoginUsername.value);
+  if (typeof currentAccount == 'undefined') {
+    console.log(`ERROR: Username ${inputLoginUsername.value} doesn't exist...`);
+    labelWelcome.textContent = `ERROR: Username ${inputLoginUsername.value} not recognized.`;
+    containerApp.style.opacity = 0;
+  } else {
+    // using optional chaining, only check for a pin if the currentAccount is defined
+    if(currentAccount?.pin === Number(inputLoginPin.value)) {
+      // Display UI and message
+      labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`;
+      containerApp.style.opacity = 100;
+
+      // Clear input fields
+      inputLoginUsername.value = inputLoginPin.value = '';
+      inputLoginUsername.blur();
+      inputLoginPin.blur();
+
+      // Display transactions
+      _displayTransactions(currentAccount);
+
+      // Display balance
+      _calcBalanceAndDisplay(currentAccount);
+
+      // Display summary
+      _calcSummariesAndDisplay(currentAccount);
+    }
+  }
+});
 
 
 /////////////////////////////////////////////////
