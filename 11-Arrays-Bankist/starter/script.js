@@ -86,11 +86,11 @@ const _displayTransactions = function(account) {
  * @param  {} account
  */
 const _calcBalanceAndDisplay = function(account) {
-  const bal = account.transactions.reduce((acc, tr) => {
+  account.balance = account.transactions.reduce((acc, tr) => {
     return acc + tr;
   }, 0);
   
-  labelBalance.textContent = `${bal}\u20AC`;
+  labelBalance.textContent = `${account.balance}\u20AC`;
 }
 
 /**
@@ -141,29 +141,40 @@ const _calcSummariesAndDisplay = function(account) {
 const _addUserNameToAccount = function(accounts) {
   accounts.forEach((account) => {
     account.username = setUserName(account.owner)
-  })
+  });
 }
 
 // Populate usernames to the individual account objects
 _addUserNameToAccount(accounts);
 
+const _updateUI = function(account) {
+      // Display transactions
+      _displayTransactions(account);
 
+      // Display balance
+      _calcBalanceAndDisplay(account);
+
+      // Display summary
+      _calcSummariesAndDisplay(account);
+}
+
+// SECTION 158: Implementing Transfers
 // Event handlers
-let currentAccount;
+let _currentAccount;
 
 btnLogin.addEventListener('click', (event) => {
   event.preventDefault();  // prevent form from submitting
 
-  const currentAccount = accounts.find(account => account.username === inputLoginUsername.value);
-  if (typeof currentAccount == 'undefined') {
+  _currentAccount = accounts.find(account => account.username === inputLoginUsername.value);
+  if (typeof _currentAccount == 'undefined') {
     console.log(`ERROR: Username ${inputLoginUsername.value} doesn't exist...`);
     labelWelcome.textContent = `ERROR: Username ${inputLoginUsername.value} not recognized.`;
     containerApp.style.opacity = 0;
   } else {
     // using optional chaining, only check for a pin if the currentAccount is defined
-    if(currentAccount?.pin === Number(inputLoginPin.value)) {
+    if(_currentAccount?.pin === Number(inputLoginPin.value)) {
       // Display UI and message
-      labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`;
+      labelWelcome.textContent = `Welcome back, ${_currentAccount.owner.split(' ')[0]}`;
       containerApp.style.opacity = 100;
 
       // Clear input fields
@@ -171,18 +182,37 @@ btnLogin.addEventListener('click', (event) => {
       inputLoginUsername.blur();
       inputLoginPin.blur();
 
-      // Display transactions
-      _displayTransactions(currentAccount);
-
-      // Display balance
-      _calcBalanceAndDisplay(currentAccount);
-
-      // Display summary
-      _calcSummariesAndDisplay(currentAccount);
+      _updateUI(_currentAccount);
     }
   }
 });
 
+// SECTION 159: Implementing Transfers
+btnTransfer.addEventListener('click', (event) => {
+  event.preventDefault();
+
+  const amount = Number(inputTransferAmount.value);
+  const payeeAcc = accounts.find(account => account.username === inputTransferTo.value);
+  console.log(amount, payeeAcc);
+  console.log(_currentAccount);
+
+  if(amount > 0 && 
+    payeeAcc &&
+    _currentAccount?.balance >= amount && 
+    payeeAcc?.username !== _currentAccount.username) {
+  
+    // update payer & payee accounts
+    _currentAccount.transactions.push(-amount);
+    payeeAcc.transactions.push(amount);
+    
+    // update UI
+    _updateUI(_currentAccount);
+  } else {
+    console.log(`ERROR: Can\'t transfer ${amount} to ${inputTransferTo.value}`);
+  }
+  // cleanup Transfer UI elements
+  inputTransferTo.value = inputTransferAmount.value = '';
+});
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
