@@ -214,6 +214,26 @@ btnTransfer.addEventListener('click', (event) => {
   inputTransferTo.value = inputTransferAmount.value = '';
 });
 
+// SECTION 161: some and every methods
+btnLoan.addEventListener('click', (event) => {
+  event.preventDefault();
+
+  const amount = Number(inputLoanAmount.value);
+
+  // calculate loan amount from 10% of a deposited amount
+  if(amount > 0 && _currentAccount.transactions.some(transaction => transaction >= amount * 0.1)) {
+    console.log(`loan request approved for \$${amount}`);
+    _currentAccount.transactions.push(amount);
+    _updateUI(_currentAccount);
+  } else {
+    console.log(`loan request denied for \$${amount}`);
+  }
+  
+  // cleanup inputs
+  inputLoanAmount.value = '';
+
+});
+
 // SECTION 160: The findIndex Method
 btnClose.addEventListener('click', (event) => {
   event.preventDefault();
