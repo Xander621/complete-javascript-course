@@ -214,6 +214,27 @@ btnTransfer.addEventListener('click', (event) => {
   inputTransferTo.value = inputTransferAmount.value = '';
 });
 
+// SECTION 160: The findIndex Method
+btnClose.addEventListener('click', (event) => {
+  event.preventDefault();
+
+  if (inputCloseUsername.value === _currentAccount?.username && 
+    Number(inputClosePin.value) === _currentAccount?.pin) {
+
+    console.log(`DELETING ACCOUNT FOR: ${_currentAccount.username}`);
+    const index = accounts.findIndex( account => account.username === _currentAccount.username);
+
+    // delete account at index
+    accounts.splice(index, 1);
+
+    //Hide UI
+    containerApp.style.opacity = 0;
+    labelWelcome.textContent = 'Log in to get started';
+  } 
+  // cleanup inputs
+  inputCloseUsername.value = inputClosePin.value = '';
+});
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
