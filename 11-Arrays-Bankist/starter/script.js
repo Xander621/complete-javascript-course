@@ -65,9 +65,13 @@ const inputClosePin = document.querySelector('.form__input--pin');
  * Updates the UI transactions elements based on the user account provided
  * @param  {} account
  */
-const _displayTransactions = function(account) {
+const _displayTransactions = function(account, sort = false) {
   containerTransactions.innerHTML = '';
-  account.transactions.forEach((tr, i) => {
+
+  //sort
+  const sorted = sort ? account.transactions.slice().sort((a,b) => a - b) : account.transactions;
+
+  sorted.forEach((tr, i) => {
     const type = tr > 0 ? 'deposit' : 'withdrawal';
 
     const html = `
@@ -253,6 +257,14 @@ btnClose.addEventListener('click', (event) => {
   } 
   // cleanup inputs
   inputCloseUsername.value = inputClosePin.value = '';
+});
+
+// SECTION 163: Sorting Arrays
+let sortedState = false;
+btnSort.addEventListener('click', (e) => {
+  e.preventDefault();
+  _displayTransactions(_currentAccount, !sortedState);
+  sortedState = !sortedState;
 });
 
 /////////////////////////////////////////////////
