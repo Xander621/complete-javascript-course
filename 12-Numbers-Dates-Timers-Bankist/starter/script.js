@@ -251,3 +251,13 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
+
+// Conversion from string to number
+console.log(Number('23'));
+console.log(+'23');
+
+// Parsing
+console.log(Number.parseInt('30px', 10));
+console.log(Number.parseInt('23e', 10));
+
+console.log(Number.parseFloat('2.5rem'));
