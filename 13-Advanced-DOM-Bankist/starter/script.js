@@ -62,43 +62,80 @@ document.querySelector('.btn--close-cookie').addEventListener('click', function(
  * .insertAdjacentHTML - see section 11
  */
 
-// Styles: These are inline styles on the message element.
-message.style.backgroundColor = '#37383d';
-message.style.width = '120%';
+// // Styles: These are inline styles on the message element.
+// message.style.backgroundColor = '#37383d';
+// message.style.width = '120%';
 
-// Can log to console inline styles, i.e. the ones we set on message, but not on computed styles
-console.log(message.style.color);               // will not see in console log
-console.log(message.style.backgroundColor);     // will see in console log
+// // Can log to console inline styles, i.e. the ones we set on message, but not on computed styles
+// console.log(message.style.color);               // will not see in console log
+// console.log(message.style.backgroundColor);     // will see in console log
 
-// To see comuted styles use the getComputedStyle method on the element
-console.log(getComputedStyle(message));         // Shows all styles associated on the element
-console.log(getComputedStyle(message).color);   // console logs the color
-console.log(getComputedStyle(message).height);  // console logs the height
+// // To see comuted styles use the getComputedStyle method on the element
+// console.log(getComputedStyle(message));         // Shows all styles associated on the element
+// console.log(getComputedStyle(message).color);   // console logs the color
+// console.log(getComputedStyle(message).height);  // console logs the height
 
-// sets an inline style by using the computedStyle and modifiying it.
-message.style.height = Number.parseFloat(getComputedStyle(message).height, 10) + 10 + 'px';
+// // sets an inline style by using the computedStyle and modifiying it.
+// message.style.height = Number.parseFloat(getComputedStyle(message).height, 10) + 10 + 'px';
 
-// CSS custom properties i.e. variables
-document.documentElement.style.setProperty('--color-primary', 'orangered');
+// // CSS custom properties i.e. variables
+// document.documentElement.style.setProperty('--color-primary', 'orangered');
 
-// Attributes
-const logo = document.querySelector('.nav__logo');
-console.log(logo.alt);
-console.log(logo.src);
+// // Attributes
+// const logo = document.querySelector('.nav__logo');
+// console.log(logo.alt);
+// console.log(logo.src);
 
-// Non-standard vs standard attributes 
-console.log(logo.designer);                   // reports undefined because designer is a custom attribute
-console.log(logo.getAttribute('designer'));   // will show the value of the custom attribute
+// // Non-standard vs standard attributes 
+// console.log(logo.designer);                   // reports undefined because designer is a custom attribute
+// console.log(logo.getAttribute('designer'));   // will show the value of the custom attribute
 
-// Data attributes: see index.html version-number to camelcase for this example
-console.log(logo.dataset.versionNumber);
+// // Data attributes: see index.html version-number to camelcase for this example
+// console.log(logo.dataset.versionNumber);
 
-// Classes
-logo.classList.add('c', 'j');
-console.log(logo);
-logo.classList.remove('c');
-console.log(logo);
-console.log('Contains j: ' + logo.classList.contains('j'));
-logo.classList.toggle('j');
-console.log(logo);
-console.log('Contains j: ' + logo.classList.contains('j'));
+// // Classes
+// logo.classList.add('c', 'j');
+// console.log(logo);
+// logo.classList.remove('c');
+// console.log(logo);
+// console.log('Contains j: ' + logo.classList.contains('j'));
+// logo.classList.toggle('j');
+// console.log(logo);
+// console.log('Contains j: ' + logo.classList.contains('j'));
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Section 13 - 188 Implementing Smooth Scrolling
+ */
+
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+btnScrollTo.addEventListener('click', (e) => {
+  // const s1coords = section1.getBoundingClientRect();
+  // console.log(s1coords);
+
+  // console.log(e.target.getBoundingClientRect());
+
+  // console.log('Current scroll (x/y)', window.pageXOffset, pageYOffset);
+
+  // Scrolling 
+  // window.scrollTo(s1coords.left, s1coords.top);  // top relative to viewport not page
+  // window.scrollTo(s1coords.left, s1coords.top + window.scrollY);  // fix by adding current Y scroll offset
+
+  // Enable smooth scrolling, convert to object (OLD SCHOOL WAY)
+  // window.scrollTo({
+  //   left: s1coords.left + window.scrollX,
+  //   top:s1coords.top + window.scrollY,
+  //   behavior: 'smooth',
+  // });
+
+
+  section1.scrollIntoView({behavior: 'smooth'});  // Modern browsers support this
+});
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Section 13 - 189 Types of Events and Event Handlers
+ */
+
