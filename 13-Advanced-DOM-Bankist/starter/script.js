@@ -139,3 +139,56 @@ btnScrollTo.addEventListener('click', (e) => {
  * Section 13 - 189 Types of Events and Event Handlers
  */
 
+const h1 = document.querySelector('h1');
+
+const alertH1 = function(e) {
+  alert('addEventListener: Great! You are reading the heading :D');
+
+  // If you only wanted it to happen once you could remove the listener here
+  // h1.removeEventListener('mouseenter', alertH1);
+};
+
+h1.addEventListener('mouseenter', alertH1);
+
+// Remove listener based on a timeout of 3 seconds
+setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
+
+// Older style used property... better is to use addEventListener
+// h1.onmouseenter = function(e) {
+//   alert('addEventListener: Great! You are reading the heading :D');
+// };
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Section 13 - 190/191 Event propagation: Bubbling and Capturing
+ */
+
+// random color rgb(255, 255, 255)
+const  randomInt = (min,max) => 
+  Math.floor(Math.random() * (max - min + 1) + min);
+
+const randomColor = () => `rgb(${randomInt(0,255)},${randomInt(0,255)},${randomInt(0,255)})`;
+// console.log((randomColor(0,255)));
+
+document.querySelector('.nav__link').addEventListener('click', function(e) {
+  console.log('LINK', e.target, e.currentTarget);
+  this.style.backgroundColor = randomColor();
+  console.log(e.currentTarget === this);
+
+  // Stop propagation, in practice may not be what you need to do.
+  // e.stopPropagation();
+});
+
+document.querySelector('.nav__links').addEventListener('click', function(e) {
+  console.log('LINKS', e.target, e.currentTarget);
+  this.style.backgroundColor = randomColor();
+});
+
+document.querySelector('.nav').addEventListener('click', function(e) {
+  console.log('NAV', e.target, e.currentTarget);
+  this.style.backgroundColor = randomColor();
+});
+
+
+
+
