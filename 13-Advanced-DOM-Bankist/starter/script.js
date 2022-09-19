@@ -7,7 +7,8 @@ const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
-
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
 const header = document.querySelector('.header');
 
 const openModal = function (e) {
@@ -108,9 +109,6 @@ document.querySelector('.btn--close-cookie').addEventListener('click', function(
  * Section 13 - 188 Implementing Smooth Scrolling
  */
 
-const btnScrollTo = document.querySelector('.btn--scroll-to');
-const section1 = document.querySelector('#section--1');
-
 btnScrollTo.addEventListener('click', (e) => {
   // const s1coords = section1.getBoundingClientRect();
   // console.log(s1coords);
@@ -129,8 +127,6 @@ btnScrollTo.addEventListener('click', (e) => {
   //   top:s1coords.top + window.scrollY,
   //   behavior: 'smooth',
   // });
-
-
   section1.scrollIntoView({behavior: 'smooth'});  // Modern browsers support this
 });
 
@@ -139,19 +135,19 @@ btnScrollTo.addEventListener('click', (e) => {
  * Section 13 - 189 Types of Events and Event Handlers
  */
 
-const h1 = document.querySelector('h1');
+// const h1 = document.querySelector('h1');
 
-const alertH1 = function(e) {
-  alert('addEventListener: Great! You are reading the heading :D');
+// const alertH1 = function(e) {
+//   alert('addEventListener: Great! You are reading the heading :D');
 
-  // If you only wanted it to happen once you could remove the listener here
-  // h1.removeEventListener('mouseenter', alertH1);
-};
+//   // If you only wanted it to happen once you could remove the listener here
+//   // h1.removeEventListener('mouseenter', alertH1);
+// };
 
-h1.addEventListener('mouseenter', alertH1);
+// h1.addEventListener('mouseenter', alertH1);
 
-// Remove listener based on a timeout of 3 seconds
-setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
+// // Remove listener based on a timeout of 3 seconds
+// setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
 
 // Older style used property... better is to use addEventListener
 // h1.onmouseenter = function(e) {
@@ -163,32 +159,140 @@ setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
  * Section 13 - 190/191 Event propagation: Bubbling and Capturing
  */
 
-// random color rgb(255, 255, 255)
-const  randomInt = (min,max) => 
-  Math.floor(Math.random() * (max - min + 1) + min);
+// // random color rgb(255, 255, 255)
+// const  randomInt = (min,max) => 
+//   Math.floor(Math.random() * (max - min + 1) + min);
 
-const randomColor = () => `rgb(${randomInt(0,255)},${randomInt(0,255)},${randomInt(0,255)})`;
-// console.log((randomColor(0,255)));
+// const randomColor = () => `rgb(${randomInt(0,255)},${randomInt(0,255)},${randomInt(0,255)})`;
+// // console.log((randomColor(0,255)));
 
-document.querySelector('.nav__link').addEventListener('click', function(e) {
-  console.log('LINK', e.target, e.currentTarget);
-  this.style.backgroundColor = randomColor();
-  console.log(e.currentTarget === this);
+// document.querySelector('.nav__link').addEventListener('click', function(e) {
+//   console.log('LINK', e.target, e.currentTarget);
+//   this.style.backgroundColor = randomColor();
+//   console.log(e.currentTarget === this);
 
-  // Stop propagation, in practice may not be what you need to do.
-  // e.stopPropagation();
-});
+//   // Stop propagation, in practice may not be what you need to do.
+//   // e.stopPropagation();
+// });
 
+// document.querySelector('.nav__links').addEventListener('click', function(e) {
+//   console.log('LINKS', e.target, e.currentTarget);
+//   this.style.backgroundColor = randomColor();
+// });
+
+// document.querySelector('.nav').addEventListener('click', function(e) {
+//   console.log('NAV', e.target, e.currentTarget);
+//   this.style.backgroundColor = randomColor();
+// });
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Section 13 - 192 Event Delegation: Implmenting Page Navigation
+ */
+
+// // Page navigation w/o event delegation
+// document.querySelectorAll('.nav__link').forEach(function(el) {
+//   el.addEventListener('click', function(e) {
+//     e.preventDefault();
+//     const id = this.getAttribute('href');
+//     console.log(id);
+//     document.querySelector(id).scrollIntoView({behavior: 'smooth'});
+//   });
+// });
+
+// Page navigation w/ event delegation
+// 1. Add event listener to common parent element
+// 2. Determine what element originated the event
 document.querySelector('.nav__links').addEventListener('click', function(e) {
-  console.log('LINKS', e.target, e.currentTarget);
-  this.style.backgroundColor = randomColor();
+  e.preventDefault();
+  // Matching strategy
+  if(e.target.classList.contains('nav__link')) {
+    const id = e.target.getAttribute('href');
+    document.querySelector(id).scrollIntoView({behavior: 'smooth'});
+  }
 });
 
-document.querySelector('.nav').addEventListener('click', function(e) {
-  console.log('NAV', e.target, e.currentTarget);
-  this.style.backgroundColor = randomColor();
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Section 13 - 193 DOM Traversing
+ */
+// const h1 = document.querySelector('h1');
+
+// // Going downwards: child
+// console.log(h1.querySelectorAll('.highlight'));
+// console.log(h1.childNodes);
+// console.log(h1.children);
+// h1.firstElementChild.style.color = 'white';
+// h1.lastElementChild.style.color = 'orangered';
+
+// // Going upwards: parents
+// console.log(h1.parentNode);
+// console.log(h1.parentElement);
+
+// h1.closest('.header').style.background = 'var(--gradient-secondary)';
+// h1.closest('h1').style.background = 'var(--gradient-primary)';
+
+// // Going sideways: can only access direct siblings (pervious or next)
+// console.log(h1.previousElementSibling);
+// console.log(h1.nextElementSibling);
+
+// console.log(h1.previousSibling);
+// console.log(h1.nextSibling);
+
+// console.log(h1.parentElement.children);
+// [...h1.parentElement.children].forEach(function(el) {
+//   if(el !== h1) el.style.transform = 'scale(0.5)';
+// })
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Section 13 - 194 Building a tabbed component
+ */
+
+// Tabbed component
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+// Add event handlers w/ event delegation & using the closest method to
+// return the operations__tab button regardless of what is clicked within
+// the button class, i.e. button or span in this case.
+tabsContainer.addEventListener('click', function(e) {
+  const clicked = e.target.closest('.operations__tab'); 
+
+  // Guard clause
+  if(!clicked) return;
+
+  // Activate clicked tab
+  tabs.forEach(tab => tab.classList.remove('operations__tab--active'));
+  clicked.classList.add('operations__tab--active');
+
+  // Activate content area
+  tabsContent.forEach(tab => tab.classList.remove('operations__content--active'));
+  document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active');
 });
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Section 13 - 195 Passing Arguments to Event Handlers
+ */
 
+// Menu fade animation using event delegation
+const nav = document.querySelector('.nav');
 
+const handleHover = function(e) {
+  if(e.target.classList.contains('nav__link')) {
+    const link = e.target;
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+    const logo = link.closest('.nav').querySelector('img');
 
+    siblings.forEach(el => {
+      if(el !== link) el.style.opacity = this;
+    });
+    logo.style.opacity = this;
+  }
+};
+
+// using bind to assign 
+nav.addEventListener('mouseover', handleHover.bind(0.5));
+nav.addEventListener('mouseout', handleHover.bind(1));
