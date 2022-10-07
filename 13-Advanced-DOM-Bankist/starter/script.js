@@ -379,3 +379,44 @@ allSections.forEach(function(section) {
   section.classList.add('section--hidden');
 });
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Section 13 - 199 Lazy Loading Images
+ * 
+ * Generate a low rez placeholder img to load with the page and create
+ * a blur filter and apply to the low rez img.
+ * 
+ * Create a data-src attribute with the high rez image and load high 
+ * rez on observer and when it finishes loading remove the blur filter.
+ */
+
+const imgTargets = document.querySelectorAll('img[data-src]');
+// console.log(imgTargets);
+
+const loadImg = function(entries, observer) {
+  const [entry] = entries;
+
+  if(!entry.isIntersecting) return;
+
+  // Replace src with data-src
+  entry.target.src = entry.target.dataset.src;
+
+  // Remove blury filter on finish load of img
+  entry.target.addEventListener('load', () => {
+    entry.target.classList.remove('lazy-img');
+  });
+  observer.unobserve(entry.target);
+};
+
+// start loading images before the user gets to images
+const imgObserver = new IntersectionObserver(loadImg, 
+  {
+    root: null, 
+    threshold: 0, 
+    rootMargin: '200px'
+  }
+);
+
+imgTargets.forEach((img) => {
+  imgObserver.observe(img);
+})
