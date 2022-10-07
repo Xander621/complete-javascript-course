@@ -376,7 +376,7 @@ const sectionObserver = new IntersectionObserver(revealSection, {root: null, thr
 
 allSections.forEach(function(section) {
   sectionObserver.observe(section);
-  section.classList.add('section--hidden');
+  // section.classList.add('section--hidden');
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -419,4 +419,53 @@ const imgObserver = new IntersectionObserver(loadImg,
 
 imgTargets.forEach((img) => {
   imgObserver.observe(img);
-})
+});
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Section 13 - 200 Building a Slider Component - Part 1
+ *
+ */
+
+// Slider
+const slides = document.querySelectorAll('.slide');
+const btnLeft = document.querySelector('.slider__btn--left');
+const btnRight = document.querySelector('.slider__btn--right');
+
+let curSlide = 0;
+const maxSlide = slides.length;
+
+// const slider = document.querySelector('.slider');
+// slider.style.transform = 'scale(0.5)';
+// slider.style.overflow = "visible";
+
+const gotoSlide = function(slide) {
+  slides.forEach((slide, index) => slide.style.transform = `translateX(${100 * (index - curSlide)}%)`);
+};
+
+// Next slide
+const nextSlide = function() {
+  if(curSlide === maxSlide - 1) {  // zero based
+    curSlide = 0;
+  } else {
+    curSlide++
+  }
+  gotoSlide(curSlide)
+};
+
+// Previous slide Can s
+const previousSlide = function() {
+  if(curSlide > 0) {
+    curSlide--;
+    // gotoSlide(--curSlide)  
+  } else {
+    curSlide = maxSlide - 1;
+    // return;
+  }
+  gotoSlide(curSlide);
+};
+
+gotoSlide(0);
+  
+btnRight.addEventListener('click', nextSlide);
+btnLeft.addEventListener('click', previousSlide);
