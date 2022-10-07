@@ -428,44 +428,92 @@ imgTargets.forEach((img) => {
  */
 
 // Slider
-const slides = document.querySelectorAll('.slide');
-const btnLeft = document.querySelector('.slider__btn--left');
-const btnRight = document.querySelector('.slider__btn--right');
+const slider = function () {
+  const slides = document.querySelectorAll('.slide');
+  const btnLeft = document.querySelector('.slider__btn--left');
+  const btnRight = document.querySelector('.slider__btn--right');
+  const dotContainer = document.querySelector('.dots');
 
-let curSlide = 0;
-const maxSlide = slides.length;
+  let curSlide = 0;
+  const maxSlide = slides.length;
 
-// const slider = document.querySelector('.slider');
-// slider.style.transform = 'scale(0.5)';
-// slider.style.overflow = "visible";
+  // create dots for slide based on number of slides in slider
+  const createDots = function () {
+    slides.forEach((_, i) => {
+      dotContainer.insertAdjacentHTML(
+        'beforeend',
+        `<button class="dots__dot" data-slide="${i}"></button>`
+      );
+    });
+  };
 
-const gotoSlide = function(slide) {
-  slides.forEach((slide, index) => slide.style.transform = `translateX(${100 * (index - curSlide)}%)`);
+  // Activate the dot associated with the currently viewed slide
+  const activateDot = function (slide) {
+    document
+      .querySelectorAll('.dots__dot')
+      .forEach(dot => dot.classList.remove('dots__dot--active'));
+    document
+      .querySelector(`.dots__dot[data-slide="${slide}"]`)
+      .classList.add('dots__dot--active');
+  };
+
+  // Move slider to the selected slide
+  const gotoSlide = function (slide) {
+    slides.forEach((s, i) => {
+      s.style.transform = `translateX(${100 * (i - slide)}%)`;
+    });
+  };
+
+  // Next slide
+  const nextSlide = function () {
+    if (curSlide === maxSlide - 1) {
+      // zero based
+      curSlide = 0;
+    } else {
+      curSlide++;
+    }
+    gotoSlide(curSlide);
+    activateDot(curSlide);
+  };
+
+  // Previous slide - For only left justification swapped commented lines for active
+  const previousSlide = function () {
+    if (curSlide > 0) {
+      curSlide--;
+      // gotoSlide(--curSlide)
+    } else {
+      curSlide = maxSlide - 1;
+      // return;
+    }
+    gotoSlide(curSlide); //comment out for left justification
+    activateDot(curSlide);
+  };
+
+  // Init Slider
+  createDots();
+  activateDot(0);
+  gotoSlide(0);
+
+  // Event handlers
+  btnRight.addEventListener('click', nextSlide);
+  btnLeft.addEventListener('click', previousSlide);
+
+  // add arrow key support
+  document.addEventListener('keydown', function (e) {
+    // console.log(e);
+    if (e.key === 'ArrowLeft') previousSlide();
+    if (e.key === 'ArrowRight') nextSlide();
+  });
+
+  // Event delegation
+  dotContainer.addEventListener('click', function (e) {
+    if (e.target.classList.contains('dots__dot')) {
+      const { slide } = e.target.dataset;
+      gotoSlide(slide);
+      activateDot(slide);
+    }
+  });
 };
+slider();
 
-// Next slide
-const nextSlide = function() {
-  if(curSlide === maxSlide - 1) {  // zero based
-    curSlide = 0;
-  } else {
-    curSlide++
-  }
-  gotoSlide(curSlide)
-};
 
-// Previous slide Can s
-const previousSlide = function() {
-  if(curSlide > 0) {
-    curSlide--;
-    // gotoSlide(--curSlide)  
-  } else {
-    curSlide = maxSlide - 1;
-    // return;
-  }
-  gotoSlide(curSlide);
-};
-
-gotoSlide(0);
-  
-btnRight.addEventListener('click', nextSlide);
-btnLeft.addEventListener('click', previousSlide);
