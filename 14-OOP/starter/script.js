@@ -246,3 +246,82 @@ car3.speedUS = 85;
 console.log(car3);
 car3.accelerate();
 console.log(car3.speedUS);
+
+const Student = function (firstName, birthYear, course) {
+    Person.call(this, firstName, birthYear);
+    this.course = course
+}
+
+// Linking prototypes
+Student.prototype = Object.create(Person.prototype);
+
+// Adding function to Student Prototype
+Student.prototype.introduce = function () {
+    console.log(`My name is ${this.firstName} and I study ${this.course}.`);
+};
+
+const mike = new Student('Mike', 2000, 'Computer Science');
+mike.introduce();
+mike.calcAge();
+
+console.log(mike.__proto__);
+console.log(mike.__proto__.__proto__);
+
+console.log(mike instanceof Student);
+console.log(mike instanceof Person);
+console.log(mike instanceof Object);
+
+console.dir(Student.prototype.constructor);
+Student.prototype.constructor = Student;
+console.dir(Student.prototype.constructor);
+
+/**
+ * Coding Challenge #3
+ * 
+ * 1. Use a constructor function to implement an Electric Car
+ *      (called EV) as a CHILD 'class' of Car.  Besides a make 
+ *      and current speed, the EV also has the current battery
+ *      charge in % ('charge' property)
+ * 2. Implement a 'chargeBattery' method which taktes an 
+ *      argument 'chargeTo' and sets the batter charge to 
+ *      'chargeTo'
+ * 3. Implement an 'accelerate' method that will increase the
+ *      car's speed by 20, and decrease the charge by 1%.  Then
+ *      log a message like this: 'Tesla going 140 kmph, with a 
+ *      charge of 22%'
+ * 4. Create an electric car object and experiment with calling
+ *      'accelerate', 'brake' and 'chargeBattery' (charge to 90%).
+ *      Notice what happens when you 'accelerate'! HINT: Review the 
+ *      definition of polymorphism ;)
+ * 
+ * DATA CAR 4: 'Tesla' going 120 kmph, with a charge of 23%
+ */
+
+const EV = function(make, speed, charge) {
+    Car.call(this, make, speed);
+    this.charge = charge;
+}
+
+// Linking Prototypes
+EV.prototype = Object.create(Car.prototype);
+
+// Add new method to prototype
+EV.prototype.chargeBattery = function(chargeTo) {
+    this.charge = chargeTo;
+};
+
+// Override accelerate for EV 
+EV.prototype.accelerate = function () {
+    this.speed += 20;
+    this.charge -= 1;
+    console.log(`The ${this.make} is currently going ${this.speed} kmph, with a charge of ${this.charge}%.`);
+};
+
+const car4 = new EV('Tesla', 120, 23);
+console.log(car4);
+car4.accelerate();
+console.log(car4);
+car4.brake();
+console.log(car4);
+car4.chargeBattery(90);
+console.log(car4);
