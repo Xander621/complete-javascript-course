@@ -195,3 +195,54 @@ steven.calcAge();
 const sarah = Object.create(PersonProto);
 sarah.init('Sarah', 1979);
 sarah.calcAge();
+
+/**
+ * Coding Challenge #2
+ * 
+ * 1.   Re-create challenge 1, but this time using an ES6 class.
+ * 2.   ADd a getter called 'speedUS' which returns the current
+ *      speed in mph (divide by 1.6);
+ * 3.   Add a setter called 'speedUS' which sets the current speed
+ *      in mph (but converts it to kmph before storing the value, by
+ *      multiplying the input by 1.6)
+ * 4.   Create a new car and experiment with the accelerate and brake
+ *      methods, and with the getter and setter.
+ * 
+ * DATA CAR3: 'Ford' going 120 kmph
+ */
+
+class CarCl {
+    // 1. 
+    constructor(make, speed) {
+        // Instance properties
+        this.make = make;
+        this.speed = speed;
+    };
+
+    accelerate () {
+        this.speed += 10;
+        console.log(`The ${this.make} is currently going ${this.speed} km/h.`);
+    };
+
+    brake () {
+        this.speed -= 5;
+        console.log(`The ${this.make} is currently going ${this.speed} km/h.`);
+    };
+
+    // getter
+    get speedUS() {
+        return this.speed / 1.6;
+    };
+
+    set speedUS(speed) {
+        this.speed = speed * 1.6;
+    };
+}
+
+const car3 = new CarCl('Ford', 120);
+console.log('car3 mph :>> ', car3.speedUS);
+console.log(car3);
+car3.speedUS = 85;
+console.log(car3);
+car3.accelerate();
+console.log(car3.speedUS);
