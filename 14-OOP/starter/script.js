@@ -414,42 +414,51 @@ jay.calcAge();
 /**
  * Section 222: Another Class Example
  * Section 223: Encapsulation: Protected Properties and Methods
+ * Section 224: Encapsulation: Private Class Fields and Methods
+ * Section 225: Chaining Methods
  */
 
 class Account {
+    // Public fields (on class instances)
+    local = navigator.language;
+    
+    // Private fields (on class instances)
+    #movements = [];
+    #pin = '';
+
     constructor(owner, currency, pin) {
         this.owner = owner;
         this.currency = currency;
-        // use underscore convention to show protected property
-        this._pin = pin;
-        this._movements = [];
-        this.locale = navigator.language;
-
+        this.#pin = pin;
         console.log(`Thanks for opening an account, ${owner}`);
     };
 
-    _approveLoan(val) {
+    // Private Methods
+    #approveLoan(val) {
         return true;
     }
 
     // PUBLIC INTERFACE OR API BELOW
     getMovements() {
-        return this._movements;
+        return this.#movements;
     }
 
     deposit(val) {
-        this._movements.push(val);
+        this.#movements.push(val);
+        return this; // return this to allow for method chaining
     };
 
     withdrawl(val) {
         this.deposit(-val);
+        return this;
     }
 
     requestLoan(val) {
-        if (this.approveLoan(val)) {
+        if (this.#approveLoan(val)) {
             this.deposit(val);
             console.log(`Loan approved for amount ${val}`);
         }
+        return this;
     }
 };
 
@@ -461,4 +470,9 @@ acc1.withdrawl(140);
 console.log(acc1);
 acc1.requestLoan(1000);
 console.log(acc1);
+acc1.requestLoan(1234);
+
+// Method chaining
+acc1.deposit(300).deposit(500).withdrawl(35).requestLoan(25000).withdrawl(4000);
+console.log(acc1.getMovements());
 
