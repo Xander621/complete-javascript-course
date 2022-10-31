@@ -38,7 +38,7 @@
 // console.log(jonas.__proto__ === Person.prototype);
 
 // console.log(Person.prototype.isPrototypeOf(jonas));     // true
-// console.log(Person.prototype.isPrototypeOf(matilda));   // true 
+// console.log(Person.prototype.isPrototypeOf(matilda));   // true
 // console.log(Person.prototype.isPrototypeOf(Person));    // false
 
 // // set properties on prototypes
@@ -49,21 +49,21 @@
 
 // /**
 //  * Coding Challenge #1
-//  * 
-//  * 1.   Use a constructor function to implement a Car.  A car has a make and a 
+//  *
+//  * 1.   Use a constructor function to implement a Car.  A car has a make and a
 //  *      speed property.  The speed property is the current speed of the car in km/h.
 //  * 2.   Implement an 'accelerate' method that will increase the car's speed by 10, and
 //  *      log the new speed to the console.
-//  * 3.   Implement a 'brake' method that will decrease the car's speed by 5, and log the 
+//  * 3.   Implement a 'brake' method that will decrease the car's speed by 5, and log the
 //  *      new speed to the console.
 //  * 4.   Create 2 car objects and experiment with calling 'accelerate' and 'brake' multiple
 //  *      times on each of them.
-//  * 
+//  *
 //  * DATA CAR 1: 'BMW' going 120 kmph
 //  * DATA CAR 2: 'Mercedes' going 95 kmph
 //  */
 
-// // 1. 
+// // 1.
 // const Car = function(make, speed) {
 //     // Instance properties
 //     this.make = make;
@@ -95,8 +95,8 @@
 
 // /**
 //  * ES6 Classes
-//  * 
-//  * 1. Classes are not hoisted, i.e. they must be declared before we can use 
+//  *
+//  * 1. Classes are not hoisted, i.e. they must be declared before we can use
 //  * 2. Classes are first-class citizens
 //  * 3. Classes are executed in strict mode.
 //  */
@@ -150,14 +150,14 @@
 //  * Getters and Setters
 //  */
 
-// // Object 
+// // Object
 // const account = {
 //     owner: 'Jonas',
 //     movements: [200, 530, 120, 300],
 
 //     get latest() {
 //         return this.movements.slice(-1).pop();
-//     }, 
+//     },
 
 //     set latest(mov) {
 //         this.movements.push(mov);
@@ -198,7 +198,7 @@
 
 // /**
 //  * Coding Challenge #2
-//  * 
+//  *
 //  * 1.   Re-create challenge 1, but this time using an ES6 class.
 //  * 2.   ADd a getter called 'speedUS' which returns the current
 //  *      speed in mph (divide by 1.6);
@@ -207,12 +207,12 @@
 //  *      multiplying the input by 1.6)
 //  * 4.   Create a new car and experiment with the accelerate and brake
 //  *      methods, and with the getter and setter.
-//  * 
+//  *
 //  * DATA CAR3: 'Ford' going 120 kmph
 //  */
 
 // class CarCl {
-//     // 1. 
+//     // 1.
 //     constructor(make, speed) {
 //         // Instance properties
 //         this.make = make;
@@ -277,23 +277,23 @@
 
 // /**
 //  * Coding Challenge #3
-//  * 
+//  *
 //  * 1. Use a constructor function to implement an Electric Car
-//  *      (called EV) as a CHILD 'class' of Car.  Besides a make 
+//  *      (called EV) as a CHILD 'class' of Car.  Besides a make
 //  *      and current speed, the EV also has the current battery
 //  *      charge in % ('charge' property)
-//  * 2. Implement a 'chargeBattery' method which taktes an 
-//  *      argument 'chargeTo' and sets the batter charge to 
+//  * 2. Implement a 'chargeBattery' method which taktes an
+//  *      argument 'chargeTo' and sets the batter charge to
 //  *      'chargeTo'
 //  * 3. Implement an 'accelerate' method that will increase the
 //  *      car's speed by 20, and decrease the charge by 1%.  Then
-//  *      log a message like this: 'Tesla going 140 kmph, with a 
+//  *      log a message like this: 'Tesla going 140 kmph, with a
 //  *      charge of 22%'
 //  * 4. Create an electric car object and experiment with calling
 //  *      'accelerate', 'brake' and 'chargeBattery' (charge to 90%).
-//  *      Notice what happens when you 'accelerate'! HINT: Review the 
+//  *      Notice what happens when you 'accelerate'! HINT: Review the
 //  *      definition of polymorphism ;)
-//  * 
+//  *
 //  * DATA CAR 4: 'Tesla' going 120 kmph, with a charge of 23%
 //  */
 
@@ -310,7 +310,7 @@
 //     this.charge = chargeTo;
 // };
 
-// // Override accelerate for EV 
+// // Override accelerate for EV
 // EV.prototype.accelerate = function () {
 //     this.speed += 20;
 //     this.charge -= 1;
@@ -332,79 +332,79 @@
  */
 
 class Person {
-    constructor(fullName, birthYear) {
-        this.fullName = fullName;
-        this.birthYear = birthYear;
-    };
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
+    this.birthYear = birthYear;
+  }
 
-    // static method, not put on prototype property
-    static hey() {
-        console.log('Hey there!');
-    };
+  // static method, not put on prototype property
+  static hey() {
+    console.log('Hey there!');
+  }
 
-    // Methods will be added to the .prototype property
-    calcAge() {
-        console.log(2022 - this.birthYear);
-    };
+  // Methods will be added to the .prototype property
+  calcAge() {
+    console.log(2022 - this.birthYear);
+  }
 
-    //Getter
-    get age() {
-        return 2022 - this.birthYear
-    };
+  //Getter
+  get age() {
+    return 2022 - this.birthYear;
+  }
 
-    get fullName() {
-        return this._fullName;
-    }
+  get fullName() {
+    return this._fullName;
+  }
 
-    //Setter
-    set fullName(name) {
-        if(name.includes(' ')) this._fullName = name;
-        else alert(`${name} is not a full name`)
-    }
+  //Setter
+  set fullName(name) {
+    if (name.includes(' ')) this._fullName = name;
+    else alert(`${name} is not a full name`);
+  }
 }
 
 class Student extends Person {
-    constructor(fullName, birthYear, course) {
-        // Always needs to happend first, creates the this keyword
-        super(fullName, birthYear); 
-        this.course = course;
-    }
+  constructor(fullName, birthYear, course) {
+    // Always needs to happend first, creates the this keyword
+    super(fullName, birthYear);
+    this.course = course;
+  }
 
-    // Override calcAge
-    calcAge() {
-        console.log(`I'm ${2022 - this.birthYear} years old.`);
-    }
+  // Override calcAge
+  calcAge() {
+    console.log(`I'm ${2022 - this.birthYear} years old.`);
+  }
 }
 
-const martha = new Student('Martha Jones', 1974, "Chemistry");
+const martha = new Student('Martha Jones', 1974, 'Chemistry');
 martha.calcAge();
 
 /**
  * 221: Inheritance Between "Classes": Object.create
- * 
+ *
  */
 
 const PersonProto = {
-    calcAge() {
-        console.log(`I am ${2022 - this.birthYear} years old.`);
-    },
+  calcAge() {
+    console.log(`I am ${2022 - this.birthYear} years old.`);
+  },
 
-    init(firstName, birthYear) {
-        this.firstName = firstName; 
-        this.birthYear = birthYear;
-    },
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
 };
 
 const steven = Object.create(PersonProto);
 
 const StudentProto = Object.create(PersonProto);
-StudentProto.init = function(firstName, birthYear, course) {
-    PersonProto.init.call(this, firstName, birthYear);
-    this.course = course;
+StudentProto.init = function (firstName, birthYear, course) {
+  PersonProto.init.call(this, firstName, birthYear);
+  this.course = course;
 };
-StudentProto.introduce = function() {
-    console.log(`My name is ${this.firstName} and I study ${this.course}.`);
-}
+StudentProto.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}.`);
+};
 
 const jay = Object.create(StudentProto);
 jay.init('Jay', 2000, 'Computer Science');
@@ -419,48 +419,48 @@ jay.calcAge();
  */
 
 class Account {
-    // Public fields (on class instances)
-    local = navigator.language;
-    
-    // Private fields (on class instances)
-    #movements = [];
-    #pin = '';
+  // Public fields (on class instances)
+  local = navigator.language;
 
-    constructor(owner, currency, pin) {
-        this.owner = owner;
-        this.currency = currency;
-        this.#pin = pin;
-        console.log(`Thanks for opening an account, ${owner}`);
-    };
+  // Private fields (on class instances)
+  #movements = [];
+  #pin = '';
 
-    // Private Methods
-    #approveLoan(val) {
-        return true;
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.#pin = pin;
+    console.log(`Thanks for opening an account, ${owner}`);
+  }
+
+  // Private Methods
+  #approveLoan(val) {
+    return true;
+  }
+
+  // PUBLIC INTERFACE OR API BELOW
+  getMovements() {
+    return this.#movements;
+  }
+
+  deposit(val) {
+    this.#movements.push(val);
+    return this; // return this to allow for method chaining
+  }
+
+  withdrawl(val) {
+    this.deposit(-val);
+    return this;
+  }
+
+  requestLoan(val) {
+    if (this.#approveLoan(val)) {
+      this.deposit(val);
+      console.log(`Loan approved for amount ${val}`);
     }
-
-    // PUBLIC INTERFACE OR API BELOW
-    getMovements() {
-        return this.#movements;
-    }
-
-    deposit(val) {
-        this.#movements.push(val);
-        return this; // return this to allow for method chaining
-    };
-
-    withdrawl(val) {
-        this.deposit(-val);
-        return this;
-    }
-
-    requestLoan(val) {
-        if (this.#approveLoan(val)) {
-            this.deposit(val);
-            console.log(`Loan approved for amount ${val}`);
-        }
-        return this;
-    }
-};
+    return this;
+  }
+}
 
 const acc1 = new Account('Jonas', 'EUR', 1111);
 console.log(acc1);
@@ -476,3 +476,78 @@ acc1.requestLoan(1234);
 acc1.deposit(300).deposit(500).withdrawl(35).requestLoan(25000).withdrawl(4000);
 console.log(acc1.getMovements());
 
+/**
+ * Coding Challenge 4
+ *
+ * 1. Re-create challenge 3, but this time using ES6 classes:
+ *      Create an 'EVCl' child class of the 'CarCl' class
+ * 2. Make the 'charge' property private
+ * 3. Implement the ability to chain the 'accelerate' and
+ *      'chargeBattery' methods of this class, also update
+ *      the 'brake' method in teh Car class.  Then experiment
+ *      with chaining.
+ *
+ * DATA CAR 1: 'Rivian' going 120 kmph, with a charge of 23%
+ */
+
+class CarCl {
+  make;
+  speed;
+
+  constructor(make, speed) {
+    // Instance properties
+    this.make = make;
+    this.speed = speed;
+  }
+
+  accelerate() {
+    this.speed += 10;
+    console.log(`The ${this.make} is currently going ${this.speed} km/h.`);
+    return this;
+  }
+
+  brake() {
+    this.speed -= 5;
+    console.log(`The ${this.make} is currently going ${this.speed} km/h.`);
+    return this;
+  }
+
+  // getter
+  get speedUS() {
+    return this.speed / 1.6;
+  }
+
+  set speedUS(speed) {
+    this.speed = speed * 1.6;
+  }
+}
+
+class EVCl extends CarCl {
+  #charge;
+
+  constructor(make, speed, charge) {
+    super(make, speed);
+    this.#charge = charge;
+  }
+
+  chargeBattery(chargeTo) {
+    this.#charge = chargeTo;
+    return this;
+  }
+
+  accelerate() {
+    this.speed += 20;
+    this.#charge -= 1;
+    console.log(
+      `The ${this.make} is currently going ${
+        this.speed
+      } kmph, with a charge of ${this.#charge}%.`
+    );
+    return this;
+  }
+}
+
+const rivian = new EVCl('Rivian', 120, 23);
+console.log(rivian);
+rivian.brake().accelerate().accelerate().brake().chargeBattery(55);
+console.log(rivian.speedUS);
