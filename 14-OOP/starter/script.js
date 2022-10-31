@@ -378,3 +378,80 @@ class Student extends Person {
 
 const martha = new Student('Martha Jones', 1974, "Chemistry");
 martha.calcAge();
+
+/**
+ * 221: Inheritance Between "Classes": Object.create
+ * 
+ */
+
+const PersonProto = {
+    calcAge() {
+        console.log(`I am ${2022 - this.birthYear} years old.`);
+    },
+
+    init(firstName, birthYear) {
+        this.firstName = firstName; 
+        this.birthYear = birthYear;
+    },
+};
+
+const steven = Object.create(PersonProto);
+
+const StudentProto = Object.create(PersonProto);
+StudentProto.init = function(firstName, birthYear, course) {
+    PersonProto.init.call(this, firstName, birthYear);
+    this.course = course;
+};
+StudentProto.introduce = function() {
+    console.log(`My name is ${this.firstName} and I study ${this.course}.`);
+}
+
+const jay = Object.create(StudentProto);
+jay.init('Jay', 2000, 'Computer Science');
+jay.introduce();
+jay.calcAge();
+
+/**
+ * Section 222: Another Class Example
+ */
+
+class Account {
+    constructor(owner, currency, pin) {
+        this.owner = owner;
+        this.currency = currency;
+        this.pin = pin;
+        this.movements = [];
+        this.locale = navigator.language;
+
+        console.log(`Thanks for opening an account, ${owner}`);
+    };
+
+    // PUBLIC INTERFACE OR API BELOW
+    deposit(val) {
+        this.movements.push(val);
+    };
+
+    withdrawl(val) {
+        this.deposit(-val);
+    }
+
+    approveLoan(val) {
+        return true;
+    }
+
+    requestLoan(val) {
+        if (this.approveLoan(val)) {
+            this.deposit(val);
+            console.log(`Loan approved for amount ${val}`);
+        }
+    }
+};
+
+const acc1 = new Account('Jonas', 'EUR', 1111);
+console.log(acc1);
+
+acc1.deposit(250);
+acc1.withdrawl(140);
+console.log(acc1);
+acc1.requestLoan(1000);
+console.log(acc1);
