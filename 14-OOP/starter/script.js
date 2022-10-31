@@ -413,30 +413,36 @@ jay.calcAge();
 
 /**
  * Section 222: Another Class Example
+ * Section 223: Encapsulation: Protected Properties and Methods
  */
 
 class Account {
     constructor(owner, currency, pin) {
         this.owner = owner;
         this.currency = currency;
-        this.pin = pin;
-        this.movements = [];
+        // use underscore convention to show protected property
+        this._pin = pin;
+        this._movements = [];
         this.locale = navigator.language;
 
         console.log(`Thanks for opening an account, ${owner}`);
     };
 
+    _approveLoan(val) {
+        return true;
+    }
+
     // PUBLIC INTERFACE OR API BELOW
+    getMovements() {
+        return this._movements;
+    }
+
     deposit(val) {
-        this.movements.push(val);
+        this._movements.push(val);
     };
 
     withdrawl(val) {
         this.deposit(-val);
-    }
-
-    approveLoan(val) {
-        return true;
     }
 
     requestLoan(val) {
@@ -455,3 +461,4 @@ acc1.withdrawl(140);
 console.log(acc1);
 acc1.requestLoan(1000);
 console.log(acc1);
+
